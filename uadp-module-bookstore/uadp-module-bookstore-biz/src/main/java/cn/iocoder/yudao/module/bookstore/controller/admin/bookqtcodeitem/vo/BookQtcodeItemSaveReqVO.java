@@ -25,7 +25,7 @@ public class BookQtcodeItemSaveReqVO {
 
     @Schema(description = "图书编号", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "图书编号不能为空")
-    private String bookNo;
+    private Long bookNo;
 
     @Schema(description = "备注")
     private String remarks;

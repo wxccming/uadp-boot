@@ -9,12 +9,12 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class BookQtcodeSourceSaveReqVO {
 
-    @Schema(description = "资源编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "27060")
+    @Schema(description = "编号")
     private Long id;
 
-//    @Schema(description = "资源编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "8404")
-//    @NotEmpty(message = "资源编号不能为空")
-//    private String sourceId;
+    @Schema(description = "资源编号", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "资源编号不能为空")
+    private Long sourceId;
 
     @Schema(description = "资源名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "李四")
     @NotEmpty(message = "资源名称不能为空")
@@ -28,6 +28,12 @@ public class BookQtcodeSourceSaveReqVO {
     private String applicaScens;
 
     @Schema(description = "二维码编号", example = "1609")
-    private String dtcodeId;
+    private Long dtcodeId;
+
+    @Schema(description = "章节编号", example = "13822")
+    private Long chapterId;
+
+    @Schema(description = "图书编号")
+    private Long bookNo;
 
 }

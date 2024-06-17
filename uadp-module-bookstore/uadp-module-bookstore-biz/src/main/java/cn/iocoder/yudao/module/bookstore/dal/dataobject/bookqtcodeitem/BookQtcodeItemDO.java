@@ -41,7 +41,7 @@ public class BookQtcodeItemDO extends BaseDO {
     /**
      * 图书编号
      */
-    private String bookNo;
+    private Long bookNo;
     /**
      * 备注
      */

@@ -22,4 +22,7 @@ public class UserSimpleRespVO {
     @Schema(description = "部门名称", example = "IT 部")
     private String deptName;
 
+    @Schema(description = "所属单位")
+    private String publishUnit;
+
 }

@@ -21,4 +21,6 @@ public class UserImportRespVO {
     @Schema(description = "导入失败的用户集合，key 为用户名，value 为失败原因", requiredMode = Schema.RequiredMode.REQUIRED)
     private Map<String, String> failureUsernames;
 
+    @Schema(description = "所属单位")
+    private String publishUnit;
 }

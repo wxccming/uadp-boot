@@ -34,7 +34,7 @@ public class BookChapterRespVO {
 
     @Schema(description = "图书编号")
     @ExcelProperty("图书编号")
-    private String bookNo;
+    private Long bookNo;
 
     @Schema(description = "章节等级")
     @ExcelProperty("章节等级")

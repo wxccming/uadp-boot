@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.bookstore.service.bookqtcodeinfo;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoPageReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoSaveReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.ExtraBookQtcodeInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
 
 import javax.validation.Valid;
@@ -60,5 +61,12 @@ public interface BookQtcodeInfoService {
      * @return 二维码 base64码
      */
     String genQrCode(String dtcodeAddress);
+
+    /**
+     * 保存图书二维码信息和资源信息
+     *
+     * @param reqVO 二维码信息和资源信息
+     */
+    void saveBookQtcodeInfoAndQtcodeResource(@Valid ExtraBookQtcodeInfoSaveReqVO reqVO);
 
 }

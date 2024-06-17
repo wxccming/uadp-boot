@@ -53,12 +53,12 @@ public class BookQtcodeInfoDO extends BaseDO {
     /**
      * 章节编号
      */
-    private String chapterId;
+    private Long chapterId;
 
     /**
      * 图书编号
      */
-    private String bookNo;
+    private Long bookNo;
 
     /**
      * 部门标识

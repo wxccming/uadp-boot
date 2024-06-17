@@ -16,7 +16,8 @@ public class SourceInfoAuditReqVO {
     @NotEmpty(message = "审核人不能为空")
     private String auditor;
 
-    @Schema(description = "审核状态(0-未审核|1-审核不通过|2-审核通过)", example = "2")
+    @Schema(description = "审核状态(0-未审核|1-审核不通过|2-审核通过)" , requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotEmpty(message = "审核状态不能为空")
     private String auditStatus;
 
     @Schema(description = "审核意见")

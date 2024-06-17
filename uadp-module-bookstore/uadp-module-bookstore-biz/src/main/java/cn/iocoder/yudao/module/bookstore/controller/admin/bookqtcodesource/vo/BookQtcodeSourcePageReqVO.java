@@ -17,8 +17,8 @@ import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_
 @ToString(callSuper = true)
 public class BookQtcodeSourcePageReqVO extends PageParam {
 
-//    @Schema(description = "资源编号", example = "8404")
-//    private String sourceId;
+    @Schema(description = "资源编号", example = "8404")
+    private Long sourceId;
 
     @Schema(description = "资源名称", example = "李四")
     private String sourceName;
@@ -34,6 +34,11 @@ public class BookQtcodeSourcePageReqVO extends PageParam {
     private LocalDateTime[] createTime;
 
     @Schema(description = "二维码编号", example = "1609")
-    private String dtcodeId;
+    private Long dtcodeId;
 
+    @Schema(description = "章节编号", example = "13822")
+    private Long chapterId;
+
+    @Schema(description = "图书编号")
+    private Long bookNo;
 }

@@ -27,6 +27,7 @@ import cn.iocoder.yudao.module.system.service.dept.PostService;
 import cn.iocoder.yudao.module.system.service.permission.PermissionService;
 import cn.iocoder.yudao.module.system.service.tenant.TenantService;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableSet;
 import com.mzt.logapi.context.LogRecordContext;
 import com.mzt.logapi.service.impl.DiffParseFunction;
 import com.mzt.logapi.starter.annotation.LogRecord;
@@ -57,7 +58,7 @@ import static cn.iocoder.yudao.module.system.enums.LogRecordConstants.*;
 @Slf4j
 public class AdminUserServiceImpl implements AdminUserService {
 
-    @Value("${sys.user.init-password:yudaoyuanma}")
+    @Value("${sys.user.init-password:xinhuashudian}")
     private String userInitPassword;
 
     @Resource
@@ -80,6 +81,39 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Resource
     private FileApi fileApi;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @LogRecord(type = SYSTEM_USER_TYPE, subType = SYSTEM_USER_CREATE_SUB_TYPE, bizNo = "{{#user.id}}",
+            success = SYSTEM_USER_CREATE_SUCCESS)
+    public Long createAdmin(UserSaveReqVO createReqVO) {
+        // 1.1 校验账户配合
+        tenantService.handleTenantInfo(tenant -> {
+            long count = userMapper.selectCount();
+            if (count >= tenant.getAccountCount()) {
+                throw exception(USER_COUNT_MAX, tenant.getAccountCount());
+            }
+        });
+        // 1.2 校验正确性
+        validateUserForCreateOrUpdate(null, createReqVO.getUsername(),
+                createReqVO.getMobile(), createReqVO.getEmail(), createReqVO.getDeptId(), createReqVO.getPostIds());
+        // 2.1 插入用户
+        AdminUserDO user = BeanUtils.toBean(createReqVO, AdminUserDO.class);
+        user.setStatus(CommonStatusEnum.ENABLE.getStatus()); // 默认开启
+        user.setPassword(encodePassword(createReqVO.getPassword())); // 加密密码
+        userMapper.insert(user);
+        // 2.2 插入关联岗位
+        if (CollectionUtil.isNotEmpty(user.getPostIds())) {
+            userPostMapper.insertBatch(convertList(user.getPostIds(),
+                    postId -> new UserPostDO().setUserId(user.getId()).setPostId(postId)));
+        }
+        ImmutableSet<Long> immutableSet = ImmutableSet.of(1L);
+        // 2.3 插入关角色
+        permissionService.assignUserRole(user.getId(), immutableSet);
+        // 3. 记录操作日志上下文
+        LogRecordContext.putVariable("user", user);
+        return user.getId();
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

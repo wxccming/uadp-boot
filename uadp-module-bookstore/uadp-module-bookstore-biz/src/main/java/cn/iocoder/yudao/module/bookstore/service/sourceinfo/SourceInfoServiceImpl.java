@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.infra.enums.BookStoreErrorCodeConstants.SOURCE_INFO_NOT_EXISTS;
@@ -82,6 +83,9 @@ public class SourceInfoServiceImpl implements SourceInfoService {
     public void audit(SourceInfoAuditReqVO auditReqVO) {
         // 校验存在
         SourceInfoDO sourceInfo = getSourceInfo(auditReqVO.getId());
+        if(Objects.isNull(sourceInfo)){
+            throw exception(SOURCE_INFO_NOT_EXISTS);
+        }
         sourceInfo.setAuditStatus(auditReqVO.getAuditStatus());
         // 更新
         sourceInfoMapper.updateById(sourceInfo);

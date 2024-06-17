@@ -35,9 +35,9 @@ public class BookQtcodeInfoSaveReqVO {
 //    private String dtcodeId;
 
     @Schema(description = "章节编号", example = "13822")
-    private String chapterId;
+    private Long chapterId;
 
     @Schema(description = "图书编号")
-    private String bookNo;
+    private Long bookNo;
 
 }

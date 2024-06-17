@@ -8,13 +8,19 @@ import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoPageReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoSaveReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.ExtraBookQtcodeInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
 import cn.iocoder.yudao.module.bookstore.dal.mysql.bookqtcodeinfo.BookQtcodeInfoMapper;
+import cn.iocoder.yudao.module.bookstore.dal.mysql.bookqtcodesource.BookQtcodeSourceMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.infra.enums.BookStoreErrorCodeConstants.BOOK_QTCODE_INFO_NOT_EXISTS;
@@ -30,6 +36,9 @@ public class BookQtcodeInfoServiceImpl implements BookQtcodeInfoService {
 
     @Resource
     private BookQtcodeInfoMapper bookQtcodeInfoMapper;
+
+    @Resource
+    private BookQtcodeSourceMapper bookQtcodeSourceMapper;
 
     @Override
     public Long createBookQtcodeInfo(BookQtcodeInfoSaveReqVO createReqVO) {
@@ -86,4 +95,27 @@ public class BookQtcodeInfoServiceImpl implements BookQtcodeInfoService {
         return QrCodeUtil.generateAsBase64(dtcodeAddress, config, ImgUtil.IMAGE_TYPE_PNG);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void saveBookQtcodeInfoAndQtcodeResource(ExtraBookQtcodeInfoSaveReqVO reqVO) {
+        BookQtcodeInfoDO bookQtcodeInfo = BeanUtils.toBean(reqVO, BookQtcodeInfoDO.class);
+        bookQtcodeInfo.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
+        bookQtcodeInfo.setDtcodeContext("");
+        // 插入
+        int qtCodeId = bookQtcodeInfoMapper.insert(bookQtcodeInfo);
+        Collection<BookQtcodeSourceDO> entities = new ArrayList<>();
+        reqVO.getSimpleBookQtcodeSourceVO().forEach(vo ->{
+            BookQtcodeSourceDO bookQtcodeSource = new BookQtcodeSourceDO();
+            bookQtcodeSource.setBookNo(reqVO.getBookNo());
+            bookQtcodeSource.setChapterId(reqVO.getBookNo());
+            bookQtcodeSource.setSourceForm(vo.getSourceForm());
+            bookQtcodeSource.setSourceName(vo.getSourceName());
+            bookQtcodeSource.setApplicaScens(vo.getApplicaScens());
+            bookQtcodeSource.setDtcodeId((long) qtCodeId);
+            bookQtcodeSource.setSourceId(vo.getSourceId());
+            bookQtcodeSource.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
+            entities.add(bookQtcodeSource);
+        });
+        bookQtcodeSourceMapper.insertBatch(entities);
+    }
 }

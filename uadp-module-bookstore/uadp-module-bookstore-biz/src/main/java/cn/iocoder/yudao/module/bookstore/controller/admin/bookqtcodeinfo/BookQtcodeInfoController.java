@@ -9,6 +9,7 @@ import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoPageReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoRespVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoSaveReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.ExtraBookQtcodeInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
 import cn.iocoder.yudao.module.bookstore.service.bookqtcodeinfo.BookQtcodeInfoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +43,13 @@ public class BookQtcodeInfoController {
     @PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:create')")
     public CommonResult<Long> createBookQtcodeInfo(@Valid @RequestBody BookQtcodeInfoSaveReqVO createReqVO) {
         return success(bookQtcodeInfoService.createBookQtcodeInfo(createReqVO));
+    }
+
+    @PostMapping("/saveResources")
+    @Operation(summary = "保存图书二维码信息和资源信息")
+    public CommonResult<Boolean> saveBookQtcodeInfoAndQtcodeResource(@Valid @RequestBody ExtraBookQtcodeInfoSaveReqVO reqVO) {
+        bookQtcodeInfoService.saveBookQtcodeInfoAndQtcodeResource(reqVO);
+        return success(true);
     }
 
     @PutMapping("/update")
@@ -80,9 +88,7 @@ public class BookQtcodeInfoController {
             pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         }
         PageResult<BookQtcodeInfoDO> pageResult = bookQtcodeInfoService.getBookQtcodeInfoPage(pageReqVO);
-        pageResult.getList().forEach(vo -> {
-            vo.setDtcodeContext(bookQtcodeInfoService.genQrCode(vo.getDtcodeAddress()));
-        });
+        pageResult.getList().forEach(vo -> vo.setDtcodeContext(bookQtcodeInfoService.genQrCode(vo.getDtcodeAddress())));
         return success(BeanUtils.toBean(pageResult, BookQtcodeInfoRespVO.class));
     }
 

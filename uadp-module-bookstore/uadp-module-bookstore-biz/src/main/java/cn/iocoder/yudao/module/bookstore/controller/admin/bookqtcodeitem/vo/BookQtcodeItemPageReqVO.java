@@ -27,7 +27,7 @@ public class BookQtcodeItemPageReqVO extends PageParam {
     private String sourceOrigin;
 
     @Schema(description = "图书编号")
-    private String bookNo;
+    private Long bookNo;
 
     @Schema(description = "备注")
     private String remarks;

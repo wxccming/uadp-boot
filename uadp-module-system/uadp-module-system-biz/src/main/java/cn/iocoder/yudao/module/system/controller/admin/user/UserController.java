@@ -54,6 +54,13 @@ public class UserController {
         return success(id);
     }
 
+    @PostMapping("/createAdmin")
+    @Operation(summary = "新增管理员")
+    public CommonResult<Long> createAdmin(@Valid @RequestBody UserSaveReqVO reqVO) {
+        Long id = userService.createAdmin(reqVO);
+        return success(id);
+    }
+
     @PutMapping("update")
     @Operation(summary = "修改用户")
     @PreAuthorize("@ss.hasPermission('system:user:update')")

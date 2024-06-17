@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @ExcelIgnoreUnannotated
 public class BookQtcodeSourceRespVO {
 
-    @Schema(description = "资源编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "27060")
-    @ExcelProperty("资源编号")
+    @Schema(description = "编号", requiredMode = Schema.RequiredMode.REQUIRED)
+    @ExcelProperty("自增编号")
     private Long id;
 
-//    @Schema(description = "资源编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "8404")
-//    @ExcelProperty("资源编号")
-//    private String sourceId;
+    @Schema(description = "资源编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "8404")
+    @ExcelProperty("资源编号")
+    private Long sourceId;
 
     @Schema(description = "资源名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "李四")
     @ExcelProperty("资源名称")
@@ -38,6 +38,11 @@ public class BookQtcodeSourceRespVO {
 
     @Schema(description = "二维码编号", example = "1609")
     @ExcelProperty("二维码编号")
-    private String dtcodeId;
+    private Long dtcodeId;
 
+    @Schema(description = "章节编号", example = "13822")
+    private Long chapterId;
+
+    @Schema(description = "图书编号")
+    private Long bookNo;
 }

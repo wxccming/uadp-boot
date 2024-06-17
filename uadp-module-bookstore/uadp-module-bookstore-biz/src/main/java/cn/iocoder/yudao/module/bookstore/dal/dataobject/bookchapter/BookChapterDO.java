@@ -41,7 +41,7 @@ public class BookChapterDO extends BaseDO {
     /**
      * 图书编号
      */
-    private String bookNo;
+    private Long bookNo;
     /**
      * 章节等级
      */

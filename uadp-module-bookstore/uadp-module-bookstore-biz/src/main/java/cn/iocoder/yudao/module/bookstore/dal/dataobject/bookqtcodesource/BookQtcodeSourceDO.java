@@ -29,7 +29,7 @@ public class BookQtcodeSourceDO extends BaseDO {
     /**
      * 资源编号
      */
-//    private String sourceId;
+    private Long sourceId;
     /**
      * 资源名称
      */
@@ -45,11 +45,21 @@ public class BookQtcodeSourceDO extends BaseDO {
     /**
      * 二维码编号
      */
-    private String dtcodeId;
+    private Long dtcodeId;
 
     /**
      * 部门标识
      */
     private Long deptId;
+
+    /**
+     * 章节编号
+     */
+    private Long chapterId;
+
+    /**
+     * 图书编号
+     */
+    private Long bookNo;
 
 }

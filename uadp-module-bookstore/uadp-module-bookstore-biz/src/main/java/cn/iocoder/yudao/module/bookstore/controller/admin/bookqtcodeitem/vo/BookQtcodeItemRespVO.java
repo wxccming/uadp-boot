@@ -30,7 +30,7 @@ public class BookQtcodeItemRespVO {
 
     @Schema(description = "图书编号", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("图书编号")
-    private String bookNo;
+    private Long bookNo;
 
     @Schema(description = "备注")
     @ExcelProperty("备注")

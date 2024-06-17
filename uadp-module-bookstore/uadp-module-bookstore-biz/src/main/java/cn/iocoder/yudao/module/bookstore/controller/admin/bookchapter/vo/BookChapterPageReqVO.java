@@ -30,7 +30,7 @@ public class BookChapterPageReqVO extends PageParam {
     private String chapterPtitle;
 
     @Schema(description = "图书编号")
-    private String bookNo;
+    private Long bookNo;
 
     @Schema(description = "章节等级")
     private Long depth;

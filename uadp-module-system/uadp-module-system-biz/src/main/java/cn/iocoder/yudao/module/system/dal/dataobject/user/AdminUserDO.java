@@ -93,4 +93,9 @@ public class AdminUserDO extends TenantBaseDO {
      */
     private LocalDateTime loginDate;
 
+    /**
+     * 所属单位
+     */
+    private String publishUnit;
+
 }

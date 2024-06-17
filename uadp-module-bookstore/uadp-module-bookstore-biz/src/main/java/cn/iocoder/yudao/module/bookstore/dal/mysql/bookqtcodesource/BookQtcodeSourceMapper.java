@@ -18,10 +18,13 @@ public interface BookQtcodeSourceMapper extends BaseMapperX<BookQtcodeSourceDO> 
     default PageResult<BookQtcodeSourceDO> selectPage(BookQtcodeSourcePageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<BookQtcodeSourceDO>()
                 .likeIfPresent(BookQtcodeSourceDO::getSourceName, reqVO.getSourceName())
+                .eqIfPresent(BookQtcodeSourceDO::getSourceId, reqVO.getSourceId())
                 .eqIfPresent(BookQtcodeSourceDO::getSourceForm, reqVO.getSourceForm())
                 .eqIfPresent(BookQtcodeSourceDO::getApplicaScens, reqVO.getApplicaScens())
                 .betweenIfPresent(BookQtcodeSourceDO::getCreateTime, reqVO.getCreateTime())
                 .eqIfPresent(BookQtcodeSourceDO::getDtcodeId, reqVO.getDtcodeId())
+                .eqIfPresent(BookQtcodeSourceDO::getBookNo, reqVO.getBookNo())
+                .eqIfPresent(BookQtcodeSourceDO::getChapterId, reqVO.getChapterId())
                 .orderByDesc(BookQtcodeSourceDO::getId));
     }
 

@@ -20,6 +20,14 @@ import java.util.*;
 public interface AdminUserService {
 
     /**
+     * 新增管理员
+     *
+     * @param createReqVO 用户信息
+     * @return 用户编号
+     */
+    Long createAdmin(@Valid UserSaveReqVO createReqVO);
+
+    /**
      * 创建用户
      *
      * @param createReqVO 用户信息

@@ -61,15 +61,15 @@ public class SourceInfoSaveReqVO {
     @Schema(description = "适用场景")
     private String applicaScens;
 
-    @Schema(description = "格式")
+    @Schema(description = "格式", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @NotEmpty(message = "格式不能为空")
     private String format;
 
-    @Schema(description = "文件大小")
+    @Schema(description = "文件大小", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @NotNull(message = "文件大小不能为空")
     private Integer size;
 
-    @Schema(description = "大小单位")
+    @Schema(description = "大小单位", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @NotEmpty(message = "大小单位不能为空")
     private String sizeUnit;
 
