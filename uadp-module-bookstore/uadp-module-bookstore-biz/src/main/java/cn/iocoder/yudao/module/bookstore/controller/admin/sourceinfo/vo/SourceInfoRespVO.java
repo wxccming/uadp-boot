@@ -76,15 +76,15 @@ public class SourceInfoRespVO {
     @ExcelProperty("适用场景")
     private String applicaScens;
 
-    @Schema(description = "格式", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "格式")
     @ExcelProperty("格式")
     private String format;
 
-    @Schema(description = "文件大小", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "文件大小")
     @ExcelProperty("文件大小")
     private Integer size;
 
-    @Schema(description = "大小单位", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "大小单位")
     @ExcelProperty("大小单位")
     private String sizeUnit;
 
