@@ -54,7 +54,7 @@ public class ExtraSourceInfoSaveReqVO {
     private String applicaScens;
 
     @Schema(description = "附件信息", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "附件信息")
+    @NotEmpty(message = "附件信息不能为空")
     private List<StorageAddressVO> storageInfos;
 
     @Schema(description = "备用字段1")

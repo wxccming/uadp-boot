@@ -98,4 +98,9 @@ public class AdminUserDO extends TenantBaseDO {
      */
     private String publishUnit;
 
+    /**
+     * 角色标识
+     */
+    private Long roleId;
+
 }

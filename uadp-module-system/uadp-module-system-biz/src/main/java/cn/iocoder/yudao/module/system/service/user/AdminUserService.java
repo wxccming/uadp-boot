@@ -25,7 +25,7 @@ public interface AdminUserService {
      * @param createReqVO 用户信息
      * @return 用户编号
      */
-    Long createAdmin(@Valid UserSaveReqVO createReqVO);
+    Long createAdmin(@Valid AdminSaveReqVO createReqVO);
 
     /**
      * 创建用户

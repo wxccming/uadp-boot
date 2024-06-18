@@ -24,8 +24,7 @@ public class BookChapterSaveReqVO {
     @NotEmpty(message = "父节点ID(上级章节ID)章节名称不能为空")
     private String chapterPid;
 
-    @Schema(description = "父章节名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "父章节名称不能为空")
+    @Schema(description = "父章节名称")
     private String chapterPtitle;
 
     @Schema(description = "图书编号")
@@ -34,8 +33,7 @@ public class BookChapterSaveReqVO {
     @Schema(description = "章节等级")
     private Long depth;
 
-    @Schema(description = "是否最小节点", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "是否最小节点不能为空")
+    @Schema(description = "是否最小节点")
     private String isLeaf;
 
     @Schema(description = "排序")

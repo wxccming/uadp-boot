@@ -30,7 +30,7 @@ public class SourceInfoSaveReqVO {
     @Schema(description = "资源地址")
     private String sourceUrl;
 
-    @Schema(description = "资源状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
+    @Schema(description = "资源状态", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotEmpty(message = "资源状态不能为空")
     private String sourceStatus;
 
@@ -61,16 +61,13 @@ public class SourceInfoSaveReqVO {
     @Schema(description = "适用场景")
     private String applicaScens;
 
-    @Schema(description = "格式", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    @NotEmpty(message = "格式不能为空")
+    @Schema(description = "格式")
     private String format;
 
-    @Schema(description = "文件大小", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    @NotNull(message = "文件大小不能为空")
+    @Schema(description = "文件大小")
     private Integer size;
 
-    @Schema(description = "大小单位", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    @NotEmpty(message = "大小单位不能为空")
+    @Schema(description = "大小单位")
     private String sizeUnit;
 
     @Schema(description = "标签")

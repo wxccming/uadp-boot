@@ -6,13 +6,17 @@ import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.system.controller.admin.user.vo.user.*;
 import cn.iocoder.yudao.module.system.convert.user.UserConvert;
 import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
+import cn.iocoder.yudao.module.system.dal.dataobject.permission.RoleDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import cn.iocoder.yudao.module.system.enums.common.SexEnum;
 import cn.iocoder.yudao.module.system.service.dept.DeptService;
+import cn.iocoder.yudao.module.system.service.permission.PermissionService;
+import cn.iocoder.yudao.module.system.service.permission.RoleService;
 import cn.iocoder.yudao.module.system.service.user.AdminUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,6 +38,7 @@ import java.util.Map;
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertList;
+import static cn.iocoder.yudao.framework.common.util.collection.CollectionUtils.convertSet;
 
 @Tag(name = "管理后台 - 用户")
 @RestController
@@ -46,6 +51,12 @@ public class UserController {
     @Resource
     private DeptService deptService;
 
+    @Resource
+    private RoleService roleService;
+
+    @Resource
+    private PermissionService permissionService;
+
     @PostMapping("/create")
     @Operation(summary = "新增用户")
     @PreAuthorize("@ss.hasPermission('system:user:create')")
@@ -56,7 +67,7 @@ public class UserController {
 
     @PostMapping("/createAdmin")
     @Operation(summary = "新增管理员")
-    public CommonResult<Long> createAdmin(@Valid @RequestBody UserSaveReqVO reqVO) {
+    public CommonResult<Long> createAdmin(@Valid @RequestBody AdminSaveReqVO reqVO) {
         Long id = userService.createAdmin(reqVO);
         return success(id);
     }
@@ -106,7 +117,12 @@ public class UserController {
         // 拼接数据
         Map<Long, DeptDO> deptMap = deptService.getDeptMap(
                 convertList(pageResult.getList(), AdminUserDO::getDeptId));
-        return success(new PageResult<>(UserConvert.INSTANCE.convertList(pageResult.getList(), deptMap),
+
+        //拼接角色
+        List<RoleDO> roleList = roleService.getRoleList(convertSet(pageResult.getList(), AdminUserDO::getRoleId));
+        Map<Long, RoleDO> roleMap = CollectionUtils.convertMap(roleList, RoleDO::getId);
+
+        return success(new PageResult<>(UserConvert.INSTANCE.convertList(pageResult.getList(), deptMap ,roleMap),
                 pageResult.getTotal()));
     }
 
@@ -128,7 +144,8 @@ public class UserController {
         AdminUserDO user = userService.getUser(id);
         // 拼接数据
         DeptDO dept = deptService.getDept(user.getDeptId());
-        return success(UserConvert.INSTANCE.convert(user, dept));
+        RoleDO role = roleService.getRole(user.getRoleId());
+        return success(UserConvert.INSTANCE.convert(user, dept,role));
     }
 
     @GetMapping("/export")

@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.system.controller.admin.auth.vo;
 
+import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.MobileDesensitize;
+import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.PasswordDesensitize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,11 +28,12 @@ public class AuthLoginReqVO {
     @Schema(description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "buzhidao")
     @NotEmpty(message = "密码不能为空")
     @Length(min = 4, max = 16, message = "密码长度为 4-16 位")
+    @PasswordDesensitize
     private String password;
 
     // ========== 图片验证码相关 ==========
 
-    @Schema(description = "验证码，验证码开启时，需要传递", requiredMode = Schema.RequiredMode.REQUIRED,
+    @Schema(description = "验证码，验证码开启时，需要传递",
             example = "PfcH6mgr8tpXuMWFjvW6YVaqrswIuwmWI5dsVZSg7sGpWtDCUbHuDEXl3cFB1+VvCC/rAkSwK8Fad52FSuncVg==")
     @NotEmpty(message = "验证码不能为空", groups = CodeEnableGroup.class)
     private String captchaVerification;

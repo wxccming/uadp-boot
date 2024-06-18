@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.system.controller.admin.auth.vo;
 
+import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.PasswordDesensitize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

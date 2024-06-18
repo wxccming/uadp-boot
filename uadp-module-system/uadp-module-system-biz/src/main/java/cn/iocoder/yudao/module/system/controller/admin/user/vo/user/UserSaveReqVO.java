@@ -73,6 +73,9 @@ public class UserSaveReqVO {
     @Schema(description = "所属单位")
     private String publishUnit;
 
+    @Schema(description = "角色标识")
+    private Long roleId;
+
     @AssertTrue(message = "密码不能为空")
     @JsonIgnore
     public boolean isPasswordValid() {
