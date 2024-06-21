@@ -27,6 +27,7 @@ public class WebFrameworkUtils {
     private static final String REQUEST_ATTRIBUTE_COMMON_RESULT = "common_result";
 
     public static final String HEADER_TENANT_ID = "tenant-id";
+    public static final String HEADER_X_TENANT_ID = "X-Tenant-Id";
 
     /**
      * 终端的 Header
@@ -52,6 +53,13 @@ public class WebFrameworkUtils {
         String tenantId = request.getHeader(HEADER_TENANT_ID);
         return NumberUtil.isNumber(tenantId) ? Long.valueOf(tenantId) : null;
     }
+
+    public static Long getXTenantId() {
+        HttpServletRequest request = getRequest();
+        String xtenantId = request.getHeader(HEADER_X_TENANT_ID);
+        return NumberUtil.isNumber(xtenantId) ? Long.valueOf(xtenantId) : null;
+    }
+
 
     public static void setLoginUserId(ServletRequest request, Long userId) {
         request.setAttribute(REQUEST_ATTRIBUTE_LOGIN_USER_ID, userId);

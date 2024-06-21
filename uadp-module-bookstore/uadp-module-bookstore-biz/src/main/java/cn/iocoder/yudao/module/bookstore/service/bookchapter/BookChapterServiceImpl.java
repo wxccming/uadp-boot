@@ -8,6 +8,7 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookCha
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookchapter.BookChapterDO;
 import cn.iocoder.yudao.module.bookstore.dal.mysql.bookchapter.BookChapterMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
@@ -46,12 +47,16 @@ public class BookChapterServiceImpl implements BookChapterService {
         bookChapterMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteBookChapter(Long id) {
         // 校验存在
         validateBookChapterExists(id);
         // 删除
         bookChapterMapper.deleteById(id);
+        //删除子章节
+        bookChapterMapper.deleteByChapterPid(id);
+
     }
 
     private void validateBookChapterExists(Long id) {

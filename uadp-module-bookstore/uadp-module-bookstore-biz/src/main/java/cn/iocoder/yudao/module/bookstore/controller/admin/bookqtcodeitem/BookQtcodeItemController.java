@@ -39,14 +39,14 @@ public class BookQtcodeItemController {
 
     @PostMapping("/create")
     @Operation(summary = "创建二维码项目")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:create')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:create')")
     public CommonResult<Long> createBookQtcodeItem(@Valid @RequestBody BookQtcodeItemSaveReqVO createReqVO) {
         return success(bookQtcodeItemService.createBookQtcodeItem(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新二维码项目")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:update')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:update')")
     public CommonResult<Boolean> updateBookQtcodeItem(@Valid @RequestBody BookQtcodeItemSaveReqVO updateReqVO) {
         bookQtcodeItemService.updateBookQtcodeItem(updateReqVO);
         return success(true);
@@ -55,7 +55,7 @@ public class BookQtcodeItemController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除二维码项目")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:delete')")
     public CommonResult<Boolean> deleteBookQtcodeItem(@RequestParam("id") Long id) {
         bookQtcodeItemService.deleteBookQtcodeItem(id);
         return success(true);
@@ -64,7 +64,7 @@ public class BookQtcodeItemController {
     @GetMapping("/get")
     @Operation(summary = "获得二维码项目")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:query')")
     public CommonResult<BookQtcodeItemRespVO> getBookQtcodeItem(@RequestParam("id") Long id) {
         BookQtcodeItemDO bookQtcodeItem = bookQtcodeItemService.getBookQtcodeItem(id);
         return success(BeanUtils.toBean(bookQtcodeItem, BookQtcodeItemRespVO.class));
@@ -72,7 +72,7 @@ public class BookQtcodeItemController {
 
     @GetMapping("/page")
     @Operation(summary = "获得二维码项目分页")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:query')")
     public CommonResult<PageResult<BookQtcodeItemRespVO>> getBookQtcodeItemPage(@Valid @ParameterObject BookQtcodeItemPageReqVO pageReqVO) {
         //查询全部数据
         if(pageReqVO.getPageNo() <= 0 ){
@@ -84,7 +84,7 @@ public class BookQtcodeItemController {
 
     @GetMapping("/page-all")
     @Operation(summary = "获得二维码项目所有数据")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:query')")
     public CommonResult<PageResult<BookQtcodeItemRespVO>> getAllBookQtcodeItem(@Valid @ParameterObject BookQtcodeItemPageReqVO pageReqVO) {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         PageResult<BookQtcodeItemDO> pageResult = bookQtcodeItemService.getBookQtcodeItemPage(pageReqVO);
@@ -93,7 +93,7 @@ public class BookQtcodeItemController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出二维码项目 Excel")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:export')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-item:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportBookQtcodeItemExcel(@Valid BookQtcodeItemPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

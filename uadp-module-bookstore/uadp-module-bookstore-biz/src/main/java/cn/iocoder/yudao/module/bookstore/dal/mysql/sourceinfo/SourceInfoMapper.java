@@ -44,6 +44,7 @@ public interface SourceInfoMapper extends BaseMapperX<SourceInfoDO> {
                 .eqIfPresent(SourceInfoDO::getAuditUser2Id, reqVO.getAuditUser2Id())
                 .betweenIfPresent(SourceInfoDO::getCreateTime, reqVO.getCreateTime())
                 .eqIfPresent(SourceInfoDO::getAuditStatus, reqVO.getAuditStatus())
+                .eqIfPresent(SourceInfoDO::getSourceCategory, reqVO.getSourceCategory())
                 .orderByDesc(SourceInfoDO::getId));
     }
 

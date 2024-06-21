@@ -5,7 +5,11 @@ import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterPageReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookchapter.BookChapterDO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.time.LocalDateTime;
 
 /**
  * 图书章节 Mapper
@@ -29,4 +33,9 @@ public interface BookChapterMapper extends BaseMapperX<BookChapterDO> {
                 .orderByDesc(BookChapterDO::getId));
     }
 
+    /**
+     * 删除子章节,因为最多两级，因此不需要递归删除
+     */
+    @Delete("DELETE FROM infra_book_chapter WHERE chapter_pid = #{id}")
+    Integer deleteByChapterPid(@Param("id") Long id);
 }

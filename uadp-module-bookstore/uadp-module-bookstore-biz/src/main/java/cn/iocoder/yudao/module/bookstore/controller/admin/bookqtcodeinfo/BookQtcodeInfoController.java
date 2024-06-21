@@ -4,14 +4,14 @@ import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoPageReqVO;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoRespVO;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoSaveReqVO;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.ExtraBookQtcodeInfoSaveReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.*;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
 import cn.iocoder.yudao.module.bookstore.service.bookqtcodeinfo.BookQtcodeInfoService;
+import cn.iocoder.yudao.module.bookstore.service.bookqtcodesource.BookQtcodeSourceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,23 +38,31 @@ public class BookQtcodeInfoController {
     @Resource
     private BookQtcodeInfoService bookQtcodeInfoService;
 
+    @Resource
+    private BookQtcodeSourceService bookQtcodeSourceService;
+
     @PostMapping("/create")
     @Operation(summary = "创建图书二维码信息")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:create')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:create')")
     public CommonResult<Long> createBookQtcodeInfo(@Valid @RequestBody BookQtcodeInfoSaveReqVO createReqVO) {
         return success(bookQtcodeInfoService.createBookQtcodeInfo(createReqVO));
     }
 
     @PostMapping("/saveResources")
     @Operation(summary = "保存图书二维码信息和资源信息")
-    public CommonResult<Boolean> saveBookQtcodeInfoAndQtcodeResource(@Valid @RequestBody ExtraBookQtcodeInfoSaveReqVO reqVO) {
-        bookQtcodeInfoService.saveBookQtcodeInfoAndQtcodeResource(reqVO);
-        return success(true);
+    public CommonResult<Long> saveBookQtcodeInfoAndQtcodeResource(@Valid @RequestBody ExtraBookQtcodeInfoSaveReqVO reqVO) {
+        return success(bookQtcodeInfoService.saveBookQtcodeInfoAndQtcodeResource(reqVO));
+    }
+
+    @PostMapping("/updateResources")
+    @Operation(summary = "更新图书二维码信息和资源信息")
+    public CommonResult<Long> updateBookQtcodeInfoAndQtcodeResource(@Valid @RequestBody ExtraBookQtcodeInfoSaveReqVO reqVO) {
+        return success(bookQtcodeInfoService.updateBookQtcodeInfoAndQtcodeResource(reqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新图书二维码信息")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:update')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:update')")
     public CommonResult<Boolean> updateBookQtcodeInfo(@Valid @RequestBody BookQtcodeInfoSaveReqVO updateReqVO) {
         bookQtcodeInfoService.updateBookQtcodeInfo(updateReqVO);
         return success(true);
@@ -63,7 +71,7 @@ public class BookQtcodeInfoController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除图书二维码信息")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:delete')")
     public CommonResult<Boolean> deleteBookQtcodeInfo(@RequestParam("id") Long id) {
         bookQtcodeInfoService.deleteBookQtcodeInfo(id);
         return success(true);
@@ -72,29 +80,42 @@ public class BookQtcodeInfoController {
     @GetMapping("/get")
     @Operation(summary = "获得图书二维码信息")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
     public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfo(@RequestParam("id") Long id) {
         BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfo(id);
-        bookQtcodeInfo.setDtcodeContext(bookQtcodeInfoService.genQrCode(bookQtcodeInfo.getDtcodeAddress()));
-        return success(BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class));
+        //bookQtcodeInfo.setDtcodeContext(bookQtcodeInfoService.genQrCode(bookQtcodeInfo.getDtcodeAddress()));
+        List<BookQtcodeSourceDO> bookQtcodeSources = bookQtcodeInfoService.selectListByDtcodeId(id);
+        BookQtcodeInfoRespVO bookQtcodeInfoRespVO = BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class);
+        List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSources = BeanUtils.toBean(bookQtcodeSources, SimpleBookQtcodeSourceVO.class);
+        bookQtcodeInfoRespVO.setSimpleBookQtcodeSourceVO(simpleBookQtcodeSources);
+        return success(bookQtcodeInfoRespVO);
     }
 
     @GetMapping("/page")
     @Operation(summary = "获得图书二维码信息分页")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
     public CommonResult<PageResult<BookQtcodeInfoRespVO>> getBookQtcodeInfoPage(@Valid @ParameterObject BookQtcodeInfoPageReqVO pageReqVO) {
         //查询全部数据
         if(pageReqVO.getPageNo() <= 0 ){
             pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         }
         PageResult<BookQtcodeInfoDO> pageResult = bookQtcodeInfoService.getBookQtcodeInfoPage(pageReqVO);
-        pageResult.getList().forEach(vo -> vo.setDtcodeContext(bookQtcodeInfoService.genQrCode(vo.getDtcodeAddress())));
-        return success(BeanUtils.toBean(pageResult, BookQtcodeInfoRespVO.class));
+        //pageResult.getList().forEach(vo -> vo.setDtcodeContext(bookQtcodeInfoService.genQrCode(vo.getDtcodeAddress())));
+        List<BookQtcodeInfoRespVO> bookQtcodeInfoRespVOS = CollectionUtils.convertList(pageResult.getList(), vo -> {
+            List<BookQtcodeSourceDO> bookQtcodeSources = bookQtcodeInfoService.selectListByDtcodeId(vo.getId());
+            List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSources = BeanUtils.toBean(bookQtcodeSources, SimpleBookQtcodeSourceVO.class);
+            BookQtcodeInfoRespVO bookQtcodeInfoRespVO = BeanUtils.toBean(vo, BookQtcodeInfoRespVO.class);
+            if (simpleBookQtcodeSources != null) {
+                bookQtcodeInfoRespVO.setSimpleBookQtcodeSourceVO(simpleBookQtcodeSources);
+            }
+            return bookQtcodeInfoRespVO;
+        });
+        return success(new PageResult<>(bookQtcodeInfoRespVOS, pageResult.getTotal()));
     }
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出图书二维码信息 Excel")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:export')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportBookQtcodeInfoExcel(@Valid BookQtcodeInfoPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

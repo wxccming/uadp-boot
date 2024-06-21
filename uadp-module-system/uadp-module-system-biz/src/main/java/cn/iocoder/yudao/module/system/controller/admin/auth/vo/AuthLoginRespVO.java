@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.system.controller.admin.auth.vo;
 
 import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.PasswordDesensitize;
+import cn.iocoder.yudao.module.system.controller.admin.user.vo.user.UserRespVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,5 +28,8 @@ public class AuthLoginRespVO {
 
     @Schema(description = "过期时间", requiredMode = Schema.RequiredMode.REQUIRED)
     private LocalDateTime expiresTime;
+
+//    @Schema(description = "用户信息")
+//    private UserRespVO curUserInfo;
 
 }

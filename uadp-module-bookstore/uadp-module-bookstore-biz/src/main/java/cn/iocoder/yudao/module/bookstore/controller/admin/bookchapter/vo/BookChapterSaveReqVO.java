@@ -43,4 +43,9 @@ public class BookChapterSaveReqVO {
     @NotEmpty(message = "状态不能为空")
     private String chapterStatus;
 
+    @Schema(description = "章节地址")
+    private String chapterAddress;
+
+    @Schema(description = "章节Base64内容")
+    private String chapterBase;
 }

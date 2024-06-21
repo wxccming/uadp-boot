@@ -16,6 +16,11 @@ public class TenantContextHolder {
     private static final ThreadLocal<Long> TENANT_ID = new TransmittableThreadLocal<>();
 
     /**
+     * 新华书店
+     */
+    private static final ThreadLocal<Long> X_TENANT_ID = new TransmittableThreadLocal<>();
+
+    /**
      * 是否忽略租户
      */
     private static final ThreadLocal<Boolean> IGNORE = new TransmittableThreadLocal<>();
@@ -27,6 +32,15 @@ public class TenantContextHolder {
      */
     public static Long getTenantId() {
         return TENANT_ID.get();
+    }
+
+    /**
+     * 获得新华书店租户编号
+     *
+     * @return 租户编号
+     */
+    public static Long getXTenantId() {
+        return X_TENANT_ID.get();
     }
 
     /**
@@ -46,6 +60,10 @@ public class TenantContextHolder {
     public static void setTenantId(Long tenantId) {
         TENANT_ID.set(tenantId);
     }
+    public static void setXTenantId(Long xtenantId) {
+        X_TENANT_ID.set(xtenantId);
+    }
+
 
     public static void setIgnore(Boolean ignore) {
         IGNORE.set(ignore);

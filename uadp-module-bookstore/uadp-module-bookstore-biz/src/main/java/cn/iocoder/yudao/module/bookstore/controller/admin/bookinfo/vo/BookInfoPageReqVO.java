@@ -69,4 +69,9 @@ public class BookInfoPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] createTime;
 
+    @Schema(description = "图书地址")
+    private String bookAddress;
+
+    @Schema(description = "图书Base64内容")
+    private String bookBase;
 }

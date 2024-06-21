@@ -63,4 +63,10 @@ public class BookInfoSaveReqVO {
     @Schema(description = "备用字段2")
     private String spareFiled2;
 
+    @Schema(description = "图书地址")
+    private String bookAddress;
+
+    @Schema(description = "图书Base64内容")
+    private String bookBase;
+
 }

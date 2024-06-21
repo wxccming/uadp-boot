@@ -5,7 +5,11 @@ import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodesource.vo.BookQtcodeSourcePageReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 二维码资源 Mapper
@@ -28,4 +32,10 @@ public interface BookQtcodeSourceMapper extends BaseMapperX<BookQtcodeSourceDO> 
                 .orderByDesc(BookQtcodeSourceDO::getId));
     }
 
+    default List<BookQtcodeSourceDO> selectListByDtcodeId(Long dtcodeId) {
+        return selectList(BookQtcodeSourceDO::getDtcodeId, dtcodeId);
+    }
+
+    @Delete("DELETE FROM infra_book_qtcode_source WHERE dtcode_id = #{id}")
+    Integer deleteByDtcodeId(@Param("id") Long id);
 }

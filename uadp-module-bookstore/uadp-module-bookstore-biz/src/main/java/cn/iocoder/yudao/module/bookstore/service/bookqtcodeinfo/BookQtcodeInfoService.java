@@ -5,8 +5,10 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.Book
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.ExtraBookQtcodeInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 图书二维码信息 Service 接口
@@ -67,6 +69,16 @@ public interface BookQtcodeInfoService {
      *
      * @param reqVO 二维码信息和资源信息
      */
-    void saveBookQtcodeInfoAndQtcodeResource(@Valid ExtraBookQtcodeInfoSaveReqVO reqVO);
+    Long saveBookQtcodeInfoAndQtcodeResource(@Valid ExtraBookQtcodeInfoSaveReqVO reqVO);
+
+
+    /**
+     * 更新图书二维码信息和资源信息
+     *
+     * @param reqVO 二维码信息和资源信息
+     */
+    Long updateBookQtcodeInfoAndQtcodeResource(@Valid ExtraBookQtcodeInfoSaveReqVO reqVO);
+
+    List<BookQtcodeSourceDO> selectListByDtcodeId(Long dtcodeId);
 
 }

@@ -61,7 +61,7 @@ public class FileController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除文件")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:file:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:file:delete')")
     public CommonResult<Boolean> deleteFile(@RequestParam("id") Long id) throws Exception {
         fileService.deleteFile(id);
         return success(true);
@@ -94,7 +94,7 @@ public class FileController {
 
     @GetMapping("/page")
     @Operation(summary = "获得文件分页")
-    @PreAuthorize("@ss.hasPermission('infra:file:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:file:query')")
     public CommonResult<PageResult<FileRespVO>> getFilePage(@Valid FilePageReqVO pageVO) {
         PageResult<FileDO> pageResult = fileService.getFilePage(pageVO);
         return success(BeanUtils.toBean(pageResult, FileRespVO.class));

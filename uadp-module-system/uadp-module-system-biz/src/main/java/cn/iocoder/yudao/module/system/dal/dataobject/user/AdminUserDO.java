@@ -4,10 +4,7 @@ import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.mybatis.core.type.JsonLongSetTypeHandler;
 import cn.iocoder.yudao.framework.tenant.core.db.TenantBaseDO;
 import cn.iocoder.yudao.module.system.enums.common.SexEnum;
-import com.baomidou.mybatisplus.annotation.KeySequence;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -54,6 +51,7 @@ public class AdminUserDO extends TenantBaseDO {
     /**
      * 部门 ID
      */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private Long deptId;
     /**
      * 岗位编号数组
@@ -102,5 +100,4 @@ public class AdminUserDO extends TenantBaseDO {
      * 角色标识
      */
     private Long roleId;
-
 }

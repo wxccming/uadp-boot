@@ -10,6 +10,8 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.datapermission.core.util.DataPermissionUtils;
+import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
+import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.infra.api.file.FileApi;
 import cn.iocoder.yudao.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;
@@ -103,7 +105,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         AdminUserDO user = BeanUtils.toBean(createReqVO, AdminUserDO.class);
         user.setStatus(CommonStatusEnum.ENABLE.getStatus()); // 默认开启
         user.setPassword(encodePassword(createReqVO.getPassword())); // 加密密码
-        user.setDeptId(Long.parseLong(createReqVO.getPublishUnit())); // 所属单位或部门
+        user.setDeptId(createReqVO.getDeptId()); // 部门
+        user.setPublishUnit(createReqVO.getDeptId().toString()); // 所属单位或部门
         userMapper.insert(user);
         // 2.2 插入关联岗位
         if (CollectionUtil.isNotEmpty(user.getPostIds())) {
@@ -194,7 +197,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public void updateUserLogin(Long id, String loginIp) {
-        userMapper.updateById(new AdminUserDO().setId(id).setLoginIp(loginIp).setLoginDate(LocalDateTime.now()));
+        userMapper.updateUserLogin(loginIp,LocalDateTime.now(),id);
+       // userMapper.updateById(new AdminUserDO().setDeptId(SecurityFrameworkUtils.getLoginUserDeptId()).setId(id).setLoginIp(loginIp).setLoginDate(LocalDateTime.now()));
     }
 
     @Override
@@ -210,22 +214,25 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public void updateUserPassword(Long id, UserProfileUpdatePasswordReqVO reqVO) {
         // 校验旧密码密码
-        validateOldPassword(id, reqVO.getOldPassword());
+        //String oldPassword = encodePassword(reqVO.getOldPassword());// 旧密码加密
+        AdminUserDO adminUserDO = validateOldPassword(id, reqVO.getOldPassword());
         // 执行更新
         AdminUserDO updateObj = new AdminUserDO().setId(id);
         updateObj.setPassword(encodePassword(reqVO.getNewPassword())); // 加密密码
+        updateObj.setDeptId(adminUserDO.getDeptId()); // 部门
         userMapper.updateById(updateObj);
     }
 
     @Override
     public String updateUserAvatar(Long id, InputStream avatarFile) {
-        validateUserExists(id);
+        AdminUserDO adminUserDO = validateUserExists(id);
         // 存储文件
         String avatar = fileApi.createFile(IoUtil.readBytes(avatarFile));
         // 更新路径
         AdminUserDO sysUserDO = new AdminUserDO();
         sysUserDO.setId(id);
         sysUserDO.setAvatar(avatar);
+        sysUserDO.setDeptId(adminUserDO.getDeptId());
         userMapper.updateById(sysUserDO);
         return avatar;
     }
@@ -241,6 +248,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         AdminUserDO updateObj = new AdminUserDO();
         updateObj.setId(id);
         updateObj.setPassword(encodePassword(password)); // 加密密码
+        updateObj.setDeptId(user.getDeptId()); // 重新设置deptId
         userMapper.updateById(updateObj);
 
         // 3. 记录操作日志上下文
@@ -251,11 +259,12 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public void updateUserStatus(Long id, Integer status) {
         // 校验用户存在
-        validateUserExists(id);
+        AdminUserDO adminUserDO = validateUserExists(id);
         // 更新状态
         AdminUserDO updateObj = new AdminUserDO();
         updateObj.setId(id);
         updateObj.setStatus(status);
+        updateObj.setDeptId(adminUserDO.getDeptId());
         userMapper.updateById(updateObj);
     }
 
@@ -457,7 +466,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @param oldPassword 旧密码
      */
     @VisibleForTesting
-    void validateOldPassword(Long id, String oldPassword) {
+    AdminUserDO validateOldPassword(Long id, String oldPassword) {
         AdminUserDO user = userMapper.selectById(id);
         if (user == null) {
             throw exception(USER_NOT_EXISTS);
@@ -465,6 +474,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         if (!isPasswordMatch(oldPassword, user.getPassword())) {
             throw exception(USER_PASSWORD_FAILED);
         }
+        return user;
     }
 
     @Override

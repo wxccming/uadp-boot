@@ -41,14 +41,14 @@ public class BookChapterController {
 
     @PostMapping("/create")
     @Operation(summary = "创建图书章节")
-    @PreAuthorize("@ss.hasPermission('infra:book-chapter:create')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-chapter:create')")
     public CommonResult<Long> createBookChapter(@Valid @RequestBody BookChapterSaveReqVO createReqVO) {
         return success(bookChapterService.createBookChapter(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新图书章节")
-    @PreAuthorize("@ss.hasPermission('infra:book-chapter:update')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-chapter:update')")
     public CommonResult<Boolean> updateBookChapter(@Valid @RequestBody BookChapterSaveReqVO updateReqVO) {
         bookChapterService.updateBookChapter(updateReqVO);
         return success(true);
@@ -57,7 +57,7 @@ public class BookChapterController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除图书章节")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:book-chapter:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-chapter:delete')")
     public CommonResult<Boolean> deleteBookChapter(@RequestParam("id") Long id) {
         bookChapterService.deleteBookChapter(id);
         return success(true);
@@ -66,7 +66,7 @@ public class BookChapterController {
     @GetMapping("/get")
     @Operation(summary = "获得图书章节")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('infra:book-chapter:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-chapter:query')")
     public CommonResult<BookChapterRespVO> getBookChapter(@RequestParam("id") Long id) {
         BookChapterDO bookChapter = bookChapterService.getBookChapter(id);
         return success(BeanUtils.toBean(bookChapter, BookChapterRespVO.class));
@@ -74,7 +74,7 @@ public class BookChapterController {
 
     @GetMapping("/page")
     @Operation(summary = "获得图书章节分页")
-    @PreAuthorize("@ss.hasPermission('infra:book-chapter:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-chapter:query')")
     public CommonResult<PageResult<BookChapterRespVO>> getBookChapterPage(@Valid @ParameterObject BookChapterPageReqVO pageReqVO) {
         //查询全部数据
         if(pageReqVO.getPageNo() <= 0 ){
@@ -95,7 +95,7 @@ public class BookChapterController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出图书章节 Excel")
-    @PreAuthorize("@ss.hasPermission('infra:book-chapter:export')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-chapter:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportBookChapterExcel(@Valid BookChapterPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

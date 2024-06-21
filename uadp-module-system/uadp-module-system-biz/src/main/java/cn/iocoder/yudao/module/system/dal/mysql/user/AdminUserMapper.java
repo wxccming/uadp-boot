@@ -5,8 +5,12 @@ import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.system.controller.admin.user.vo.user.UserPageReqVO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -46,5 +50,11 @@ public interface AdminUserMapper extends BaseMapperX<AdminUserDO> {
     default List<AdminUserDO> selectListByDeptIds(Collection<Long> deptIds) {
         return selectList(AdminUserDO::getDeptId, deptIds);
     }
+
+    /**
+     * 更新最后登录时间
+     */
+    @Update("UPDATE system_users SET login_ip =  #{loginIip}, login_date =  #{loginDate} WHERE id =  #{id} AND deleted = 0")
+    Integer updateUserLogin(@Param("loginIip") String loginIip, @Param("loginDate") LocalDateTime loginDate, @Param("id") Long id);
 
 }

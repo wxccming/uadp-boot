@@ -84,4 +84,12 @@ public class BookInfoRespVO {
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
 
+    @Schema(description = "图书地址")
+    @ExcelProperty("图书地址")
+    private String bookAddress;
+
+    @Schema(description = "图书Base64内容")
+    @ExcelProperty("图书Base64内容")
+    private String bookBase;
+
 }

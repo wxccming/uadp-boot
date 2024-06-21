@@ -40,7 +40,7 @@ public class QueryWrapperX<T> extends QueryWrapper<T> {
     }
 
     public QueryWrapperX<T> eqIfPresent(String column, Object val) {
-        if (val != null) {
+        if (column!=null && val != null) {
             return (QueryWrapperX<T>) super.eq(column, val);
         }
         return this;

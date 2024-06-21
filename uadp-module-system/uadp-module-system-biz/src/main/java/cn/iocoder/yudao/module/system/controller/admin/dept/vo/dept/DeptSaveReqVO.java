@@ -17,7 +17,7 @@ public class DeptSaveReqVO {
     @Schema(description = "部门编号", example = "1024")
     private Long id;
 
-    @Schema(description = "部门名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋道")
+    @Schema(description = "部门名称", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank(message = "部门名称不能为空")
     @Size(max = 30, message = "部门名称长度不能超过 30 个字符")
     private String name;
@@ -25,7 +25,7 @@ public class DeptSaveReqVO {
     @Schema(description = "父部门 ID", example = "1024")
     private Long parentId;
 
-    @Schema(description = "显示顺序", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    @Schema(description = "显示顺序"/*, requiredMode = Schema.RequiredMode.REQUIRED*/)
     @NotNull(message = "显示顺序不能为空")
     private Integer sort;
 

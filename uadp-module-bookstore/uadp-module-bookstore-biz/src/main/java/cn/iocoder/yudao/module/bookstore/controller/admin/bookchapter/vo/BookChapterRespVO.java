@@ -56,4 +56,12 @@ public class BookChapterRespVO {
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
 
+    @Schema(description = "章节地址")
+    @ExcelProperty("章节地址")
+    private String chapterAddress;
+
+    @Schema(description = "章节Base64内容")
+    @ExcelProperty("章节Base64内容")
+    private String chapterBase;
+
 }

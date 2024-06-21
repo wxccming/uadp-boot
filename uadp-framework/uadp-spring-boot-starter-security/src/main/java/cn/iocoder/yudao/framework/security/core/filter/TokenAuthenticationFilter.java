@@ -42,7 +42,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @SuppressWarnings("NullableProblems")
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-
         //TODO  1.2 模拟 Login 功能，方便日常开发调试
         if (securityProperties.getMockEnable()) {
             LoginUser loginUser = new LoginUser().setId(1L).setUserType(WebFrameworkUtils.getLoginUserType(request))

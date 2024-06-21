@@ -21,6 +21,7 @@ import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.delete.Delete;
 import net.sf.jsqlparser.statement.select.*;
 import net.sf.jsqlparser.statement.update.Update;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
@@ -466,7 +467,9 @@ public class DataPermissionDatabaseInterceptor extends JsqlParserSupport impleme
                 continue;
             }
             // 合并到 dataPermissionExpression 中
-            dataPermissionExpression = dataPermissionExpression == null ? expression
+            dataPermissionExpression = (dataPermissionExpression == null
+                    || StringUtils.equalsAnyIgnoreCase("null",String.valueOf(dataPermissionExpression))
+                    || StringUtils.equalsAnyIgnoreCase("null = null",dataPermissionExpression.toString())) ? expression
                     : new AndExpression(dataPermissionExpression, expression);
         }
 
@@ -507,11 +510,11 @@ public class DataPermissionDatabaseInterceptor extends JsqlParserSupport impleme
 
             // 单条规则的条件
             Expression oneExpress = rule.getExpression(tableName, table.getAlias());
-            if (oneExpress == null){
+            if (oneExpress == null || StringUtils.equalsAnyIgnoreCase("null",String.valueOf(oneExpress)) || StringUtils.equalsAnyIgnoreCase("null = null",oneExpress.toString())){
                 continue;
             }
             // 拼接到 allExpression 中
-            allExpression = allExpression == null ? oneExpress
+            allExpression = (allExpression == null || StringUtils.equalsAnyIgnoreCase("null = null",allExpression.toString()))  ? oneExpress
                     : new AndExpression(allExpression, oneExpress);
         }
 

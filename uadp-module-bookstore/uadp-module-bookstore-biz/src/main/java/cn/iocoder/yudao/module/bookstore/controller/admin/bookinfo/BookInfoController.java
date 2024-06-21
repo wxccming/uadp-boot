@@ -39,14 +39,14 @@ public class BookInfoController {
 
     @PostMapping("/create")
     @Operation(summary = "创建图书信息")
-    @PreAuthorize("@ss.hasPermission('infra:book-info:create')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-info:create')")
     public CommonResult<Long> createBookInfo(@Valid @RequestBody BookInfoSaveReqVO createReqVO) {
         return success(bookInfoService.createBookInfo(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新图书信息")
-    @PreAuthorize("@ss.hasPermission('infra:book-info:update')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-info:update')")
     public CommonResult<Boolean> updateBookInfo(@Valid @RequestBody BookInfoSaveReqVO updateReqVO) {
         bookInfoService.updateBookInfo(updateReqVO);
         return success(true);
@@ -55,7 +55,7 @@ public class BookInfoController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除图书信息")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:book-info:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-info:delete')")
     public CommonResult<Boolean> deleteBookInfo(@RequestParam("id") Long id) {
         bookInfoService.deleteBookInfo(id);
         return success(true);
@@ -64,7 +64,7 @@ public class BookInfoController {
     @GetMapping("/get")
     @Operation(summary = "获得图书信息")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('infra:book-info:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-info:query')")
     public CommonResult<BookInfoRespVO> getBookInfo(@RequestParam("id") Long id) {
         BookInfoDO bookInfo = bookInfoService.getBookInfo(id);
         return success(BeanUtils.toBean(bookInfo, BookInfoRespVO.class));
@@ -72,7 +72,7 @@ public class BookInfoController {
 
     @GetMapping("/page")
     @Operation(summary = "获得图书信息分页")
-    @PreAuthorize("@ss.hasPermission('infra:book-info:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-info:query')")
     public CommonResult<PageResult<BookInfoRespVO>> getBookInfoPage(@Valid @ParameterObject BookInfoPageReqVO pageReqVO) {
         //查询全部数据
         if(pageReqVO.getPageNo() <= 0 ){
@@ -84,7 +84,7 @@ public class BookInfoController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出图书信息 Excel")
-    @PreAuthorize("@ss.hasPermission('infra:book-info:export')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-info:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportBookInfoExcel(@Valid BookInfoPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

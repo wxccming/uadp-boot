@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(description = "管理后台 - 图书二维码信息 Response VO")
 @Data
@@ -52,4 +53,6 @@ public class BookQtcodeInfoRespVO {
     @ExcelProperty("图书编号")
     private Long bookNo;
 
+    @Schema(description = "资源信息")
+    private List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSourceVO;
 }

@@ -48,4 +48,10 @@ public class BookChapterPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private LocalDateTime[] createTime;
 
+    @Schema(description = "章节地址")
+    private String chapterAddress;
+
+    @Schema(description = "章节Base64内容")
+    private String chapterBase;
+
 }

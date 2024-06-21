@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 /**
@@ -63,5 +64,15 @@ public class BookChapterDO extends BaseDO {
      * 部门标识
      */
     private Long deptId;
+
+    /**
+     * 章节地址
+     */
+    private String chapterAddress;
+
+    /**
+     * 章节Base64内容
+     */
+    private String chapterBase;
 
 }

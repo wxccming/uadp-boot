@@ -13,7 +13,6 @@ public class BookQtcodeSourceSaveReqVO {
     private Long id;
 
     @Schema(description = "资源编号", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotEmpty(message = "资源编号不能为空")
     private Long sourceId;
 
     @Schema(description = "资源名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "李四")

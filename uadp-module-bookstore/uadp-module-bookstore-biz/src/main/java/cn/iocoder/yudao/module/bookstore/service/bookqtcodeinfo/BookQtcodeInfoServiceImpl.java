@@ -21,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.infra.enums.BookStoreErrorCodeConstants.BOOK_QTCODE_INFO_NOT_EXISTS;
@@ -97,12 +98,11 @@ public class BookQtcodeInfoServiceImpl implements BookQtcodeInfoService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void saveBookQtcodeInfoAndQtcodeResource(ExtraBookQtcodeInfoSaveReqVO reqVO) {
+    public Long saveBookQtcodeInfoAndQtcodeResource(ExtraBookQtcodeInfoSaveReqVO reqVO) {
         BookQtcodeInfoDO bookQtcodeInfo = BeanUtils.toBean(reqVO, BookQtcodeInfoDO.class);
         bookQtcodeInfo.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
-        bookQtcodeInfo.setDtcodeContext("");
         // 插入
-        int qtCodeId = bookQtcodeInfoMapper.insert(bookQtcodeInfo);
+        bookQtcodeInfoMapper.insert(bookQtcodeInfo);
         Collection<BookQtcodeSourceDO> entities = new ArrayList<>();
         reqVO.getSimpleBookQtcodeSourceVO().forEach(vo ->{
             BookQtcodeSourceDO bookQtcodeSource = new BookQtcodeSourceDO();
@@ -111,11 +111,73 @@ public class BookQtcodeInfoServiceImpl implements BookQtcodeInfoService {
             bookQtcodeSource.setSourceForm(vo.getSourceForm());
             bookQtcodeSource.setSourceName(vo.getSourceName());
             bookQtcodeSource.setApplicaScens(vo.getApplicaScens());
-            bookQtcodeSource.setDtcodeId((long) qtCodeId);
+            bookQtcodeSource.setDtcodeId(bookQtcodeInfo.getId());
             bookQtcodeSource.setSourceId(vo.getSourceId());
+            bookQtcodeSource.setBookNo(reqVO.getBookNo());
+            bookQtcodeSource.setChapterId(reqVO.getChapterId());
             bookQtcodeSource.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
             entities.add(bookQtcodeSource);
         });
         bookQtcodeSourceMapper.insertBatch(entities);
+        return bookQtcodeInfo.getId();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Long updateBookQtcodeInfoAndQtcodeResource(ExtraBookQtcodeInfoSaveReqVO reqVO) {
+        //1、检查二维码信息是否存在
+        validateBookQtcodeInfoExists(reqVO.getId());
+        //2、更新二维码信息
+        BookQtcodeInfoDO updateObj = BeanUtils.toBean(reqVO, BookQtcodeInfoDO.class);
+        bookQtcodeInfoMapper.updateById(updateObj);
+        //先清除资源表中此二维码的所有数据
+        bookQtcodeSourceMapper.deleteByDtcodeId(reqVO.getId());
+        Collection<BookQtcodeSourceDO> entities = new ArrayList<>();
+        reqVO.getSimpleBookQtcodeSourceVO().forEach(vo ->{
+            BookQtcodeSourceDO bookQtcodeSource = new BookQtcodeSourceDO();
+            bookQtcodeSource.setBookNo(reqVO.getBookNo());
+            bookQtcodeSource.setChapterId(reqVO.getBookNo());
+            bookQtcodeSource.setSourceForm(vo.getSourceForm());
+            bookQtcodeSource.setSourceName(vo.getSourceName());
+            bookQtcodeSource.setApplicaScens(vo.getApplicaScens());
+            bookQtcodeSource.setDtcodeId(reqVO.getId());
+            bookQtcodeSource.setSourceId(vo.getSourceId());
+            bookQtcodeSource.setBookNo(reqVO.getBookNo());
+            bookQtcodeSource.setChapterId(reqVO.getChapterId());
+            bookQtcodeSource.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
+            entities.add(bookQtcodeSource);
+        });
+        bookQtcodeSourceMapper.insertBatch(entities);
+   /*
+        //3、更新资源表
+        reqVO.getSimpleBookQtcodeSourceVO().forEach(vo ->{
+            //说明是更新
+            if(vo.getSourceId() > 0 ){
+                BookQtcodeSourceDO bookQtcodeSourceDO = BeanUtils.toBean(vo, BookQtcodeSourceDO.class);
+                bookQtcodeSourceDO.setId(vo.getSourceId());
+                bookQtcodeSourceMapper.updateById(bookQtcodeSourceDO);
+            }else{
+                BookQtcodeSourceDO bookQtcodeSource = new BookQtcodeSourceDO();
+                bookQtcodeSource.setBookNo(reqVO.getBookNo());
+                bookQtcodeSource.setChapterId(reqVO.getBookNo());
+                bookQtcodeSource.setSourceForm(vo.getSourceForm());
+                bookQtcodeSource.setSourceName(vo.getSourceName());
+                bookQtcodeSource.setApplicaScens(vo.getApplicaScens());
+                bookQtcodeSource.setDtcodeId(reqVO.getId());
+                bookQtcodeSource.setSourceId(vo.getSourceId());
+                bookQtcodeSource.setBookNo(reqVO.getBookNo());
+                bookQtcodeSource.setChapterId(reqVO.getChapterId());
+                bookQtcodeSource.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
+                bookQtcodeSourceMapper.insert(bookQtcodeSource);
+            }
+        });
+        */
+        return reqVO.getId();
+    }
+
+
+    @Override
+    public List<BookQtcodeSourceDO> selectListByDtcodeId(Long dtcodeId){
+        return bookQtcodeSourceMapper.selectListByDtcodeId(dtcodeId);
     }
 }

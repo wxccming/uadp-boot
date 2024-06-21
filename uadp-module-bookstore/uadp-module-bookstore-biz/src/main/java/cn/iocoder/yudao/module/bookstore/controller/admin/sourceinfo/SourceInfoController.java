@@ -37,7 +37,7 @@ public class SourceInfoController {
 
     @PostMapping("/create")
     @Operation(summary = "创建资源信息_单表操作")
-    @PreAuthorize("@ss.hasPermission('infra:source-info:create')")
+    //@PreAuthorize("@ss.hasPermission('infra:source-info:create')")
     public CommonResult<Long> createSourceInfo(@Valid @RequestBody SourceInfoSaveReqVO createReqVO) {
         return success(sourceInfoService.createSourceInfo(createReqVO));
     }
@@ -66,7 +66,7 @@ public class SourceInfoController {
 
     @PutMapping("/update")
     @Operation(summary = "更新资源信息")
-    @PreAuthorize("@ss.hasPermission('infra:source-info:update')")
+    //@PreAuthorize("@ss.hasPermission('infra:source-info:update')")
     public CommonResult<Boolean> updateSourceInfo(@Valid @RequestBody SourceInfoSaveReqVO updateReqVO) {
         sourceInfoService.updateSourceInfo(updateReqVO);
         return success(true);
@@ -75,7 +75,7 @@ public class SourceInfoController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除资源信息")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:source-info:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:source-info:delete')")
     public CommonResult<Boolean> deleteSourceInfo(@RequestParam("id") Long id) {
         sourceInfoService.deleteSourceInfo(id);
         return success(true);
@@ -84,7 +84,7 @@ public class SourceInfoController {
     @GetMapping("/get")
     @Operation(summary = "获得资源信息")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('infra:source-info:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:source-info:query')")
     public CommonResult<SourceInfoRespVO> getSourceInfo(@RequestParam("id") Long id) {
         SourceInfoDO sourceInfo = sourceInfoService.getSourceInfo(id);
         return success(BeanUtils.toBean(sourceInfo, SourceInfoRespVO.class));
@@ -92,7 +92,7 @@ public class SourceInfoController {
 
     @GetMapping("/page")
     @Operation(summary = "获得资源信息分页")
-    @PreAuthorize("@ss.hasPermission('infra:source-info:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:source-info:query')")
     public CommonResult<PageResult<SourceInfoRespVO>> getSourceInfoPage(@Valid @ParameterObject SourceInfoPageReqVO pageReqVO) {
         //查询全部数据
         if(pageReqVO.getPageNo() <= 0 ){
@@ -104,7 +104,7 @@ public class SourceInfoController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出资源信息 Excel")
-    @PreAuthorize("@ss.hasPermission('infra:source-info:export')")
+    //@PreAuthorize("@ss.hasPermission('infra:source-info:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSourceInfoExcel(@Valid SourceInfoPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

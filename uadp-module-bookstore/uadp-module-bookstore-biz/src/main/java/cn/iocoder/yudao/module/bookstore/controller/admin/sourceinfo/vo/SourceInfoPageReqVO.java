@@ -102,5 +102,7 @@ public class SourceInfoPageReqVO extends PageParam {
     @Schema(description = "审核状态(0-未审核	|1-审核不通过|	2-审核通过)")
     private String auditStatus;
 
+    @Schema(description = "资源类型(00-教案 | 01-课件 | 02-习题 | 03-素材 | 04-试卷 | 05-微课 | 06-拓展 | 07-其它")
+    private String sourceCategory;
 
 }

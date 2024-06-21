@@ -45,7 +45,7 @@ public class BookQtcodeSourceController {
 
     @PostMapping("/saveList")
     @Operation(summary = "保存二维码资源列表")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:create')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:create')")
     public CommonResult<Boolean> saveBookQtcodeSources(@Valid @RequestBody List<BookQtcodeSourceSaveReqVO> reqVOs) {
         bookQtcodeSourceService.saveBookQtcodeSourceList(reqVOs);
         return success(true);
@@ -53,7 +53,7 @@ public class BookQtcodeSourceController {
 
     @PutMapping("/update")
     @Operation(summary = "更新二维码资源")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:update')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:update')")
     public CommonResult<Boolean> updateBookQtcodeSource(@Valid @RequestBody BookQtcodeSourceSaveReqVO updateReqVO) {
         bookQtcodeSourceService.updateBookQtcodeSource(updateReqVO);
         return success(true);
@@ -62,7 +62,7 @@ public class BookQtcodeSourceController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除二维码资源")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:delete')")
     public CommonResult<Boolean> deleteBookQtcodeSource(@RequestParam("id") Long id) {
         bookQtcodeSourceService.deleteBookQtcodeSource(id);
         return success(true);
@@ -71,7 +71,7 @@ public class BookQtcodeSourceController {
     @GetMapping("/get")
     @Operation(summary = "获得二维码资源")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:query')")
     public CommonResult<BookQtcodeSourceRespVO> getBookQtcodeSource(@RequestParam("id") Long id) {
         BookQtcodeSourceDO bookQtcodeSource = bookQtcodeSourceService.getBookQtcodeSource(id);
         return success(BeanUtils.toBean(bookQtcodeSource, BookQtcodeSourceRespVO.class));
@@ -79,7 +79,7 @@ public class BookQtcodeSourceController {
 
     @GetMapping("/page")
     @Operation(summary = "获得二维码资源分页")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:query')")
     public CommonResult<PageResult<BookQtcodeSourceRespVO>> getBookQtcodeSourcePage(@Valid @ParameterObject BookQtcodeSourcePageReqVO pageReqVO) {
         //查询全部数据
         if(pageReqVO.getPageNo() <= 0 ){
@@ -91,7 +91,7 @@ public class BookQtcodeSourceController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出二维码资源 Excel")
-    @PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:export')")
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-source:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportBookQtcodeSourceExcel(@Valid BookQtcodeSourcePageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {

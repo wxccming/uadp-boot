@@ -40,14 +40,14 @@ public class SourceauditHistoryController {
 
     @PostMapping("/create")
     @Operation(summary = "创建资源审核记录")
-    @PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:create')")
+    //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:create')")
     public CommonResult<Long> createSourceauditHistory(@Valid @RequestBody SourceauditHistorySaveReqVO createReqVO) {
         return success(sourceauditHistoryService.createSourceauditHistory(createReqVO));
     }
 
     @PutMapping("/update")
     @Operation(summary = "更新资源审核记录")
-    @PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:update')")
+    //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:update')")
     public CommonResult<Boolean> updateSourceauditHistory(@Valid @RequestBody SourceauditHistorySaveReqVO updateReqVO) {
         sourceauditHistoryService.updateSourceauditHistory(updateReqVO);
         return success(true);
@@ -56,7 +56,7 @@ public class SourceauditHistoryController {
     @DeleteMapping("/delete")
     @Operation(summary = "删除资源审核记录")
     @Parameter(name = "id", description = "编号", required = true)
-    @PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:delete')")
+    //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:delete')")
     public CommonResult<Boolean> deleteSourceauditHistory(@RequestParam("id") Long id) {
         sourceauditHistoryService.deleteSourceauditHistory(id);
         return success(true);
@@ -65,7 +65,7 @@ public class SourceauditHistoryController {
     @GetMapping("/get")
     @Operation(summary = "获得资源审核记录")
     @Parameter(name = "id", description = "编号", required = true, example = "1024")
-    @PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:query')")
     public CommonResult<SourceauditHistoryRespVO> getSourceauditHistory(@RequestParam("id") Long id) {
         SourceauditHistoryDO sourceauditHistory = sourceauditHistoryService.getSourceauditHistory(id);
         return success(BeanUtils.toBean(sourceauditHistory, SourceauditHistoryRespVO.class));
@@ -73,7 +73,7 @@ public class SourceauditHistoryController {
 
     @GetMapping("/page")
     @Operation(summary = "获得资源审核记录分页")
-    @PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:query')")
+    //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:query')")
     public CommonResult<PageResult<SourceauditHistoryRespVO>> getSourceauditHistoryPage(@Valid @ParameterObject SourceauditHistoryPageReqVO pageReqVO) {
         //查询全部数据
         if(pageReqVO.getPageNo() <= 0 ){
@@ -85,7 +85,7 @@ public class SourceauditHistoryController {
 
     @GetMapping("/export-excel")
     @Operation(summary = "导出资源审核记录 Excel")
-    @PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:export')")
+    //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:export')")
     @ApiAccessLog(operateType = EXPORT)
     public void exportSourceauditHistoryExcel(@Valid SourceauditHistoryPageReqVO pageReqVO,
               HttpServletResponse response) throws IOException {
