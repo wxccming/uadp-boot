@@ -4,6 +4,7 @@ import cn.hutool.core.lang.tree.TreeUtil;
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.collection.TreeUtils;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
@@ -80,11 +81,11 @@ public class DeptController {
 
     @GetMapping("/list-all-tree")
     @Operation(summary = "获取部门树", description = "只包含被开启的部门，主要用于前端的下拉选项")
-    public CommonResult<List<Map<String, Object>>> getSimpleDeptTreeList() {
+    public CommonResult<List<DeptSimpleRespVO>> getSimpleDeptTreeList() {
         List<DeptDO> list = deptService.getDeptList(
                 new DeptListReqVO().setStatus(CommonStatusEnum.ENABLE.getStatus()));
-        List<Map<String, Object>> result = ListConvertTreeUtil.listToTree(list);
-        return success(result);
+        List<DeptDO> deptDOS = ListConvertTreeUtil.listToTree(list);
+        return success(BeanUtils.toBean(deptDOS, DeptSimpleRespVO.class));
     }
 
     @GetMapping("/get")

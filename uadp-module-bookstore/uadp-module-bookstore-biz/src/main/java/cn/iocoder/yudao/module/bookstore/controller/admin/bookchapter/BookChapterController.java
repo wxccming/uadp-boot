@@ -7,11 +7,13 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterPageReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterRespVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookchapter.BookChapterDO;
 import cn.iocoder.yudao.module.bookstore.service.bookchapter.BookChapterService;
 import cn.iocoder.yudao.module.bookstore.util.TreeUtil;
+import cn.iocoder.yudao.module.infra.convert.DictCovert;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +26,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +37,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @RestController
 @RequestMapping("/infra/book-chapter")
 @Validated
+//@DictCovert
 public class BookChapterController {
 
     @Resource
@@ -85,12 +89,23 @@ public class BookChapterController {
     }
 
     @GetMapping("/page-tree")
-    @Operation(summary = "获得所有图书章节,以树型展示")
-    public CommonResult<List<Map<String, Object>>> getBookChapterPageTree(@Valid @ParameterObject BookChapterPageReqVO pageReqVO) {
+    @Operation(summary = "获得图书章节,以树型展示，分页接口-后续废弃")
+    public CommonResult<PageResult<BookChapterRespVO>> getBookChapterPageTree(@Valid @ParameterObject BookChapterPageReqVO pageReqVO) {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<BookChapterDO> bookChapters = bookChapterService.getBookChapterPage(pageReqVO).getList();
-        List<Map<String, Object>> result = TreeUtil.listToTree(bookChapters);
-        return success(result);
+        List<BookChapterDO> result = TreeUtil.listToTree(bookChapters);
+        PageResult<BookChapterDO> mapPageResult = new PageResult<>(result, (long) result.size());
+        return success(BeanUtils.toBean(mapPageResult,BookChapterRespVO.class));
+    }
+
+    @GetMapping("/book-tree")
+    @Operation(summary = "获得某本图书下所有章节,以树型展示")
+    public CommonResult<PageResult<BookChapterRespVO>> getAllBookChapterTree(@Valid @RequestParam("bookNo") Long bookNo) {
+        List<BookChapterDO> bookChapters = bookChapterService.getBookChapterList(bookNo);
+        bookChapters.sort(Comparator.comparing(BookChapterDO::getId));
+        List<BookChapterDO> result = TreeUtil.listToTree(bookChapters);
+        PageResult<BookChapterDO> mapPageResult = new PageResult<>(result, (long) result.size());
+        return success(BeanUtils.toBean(mapPageResult,BookChapterRespVO.class));
     }
 
     @GetMapping("/export-excel")

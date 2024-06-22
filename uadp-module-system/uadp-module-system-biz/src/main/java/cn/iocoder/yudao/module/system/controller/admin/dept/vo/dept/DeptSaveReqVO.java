@@ -26,8 +26,8 @@ public class DeptSaveReqVO {
     private Long parentId;
 
     @Schema(description = "显示顺序"/*, requiredMode = Schema.RequiredMode.REQUIRED*/)
-    @NotNull(message = "显示顺序不能为空")
-    private Integer sort;
+//    @NotNull(message = "显示顺序不能为空")
+    private Integer sort = 0;
 
     @Schema(description = "负责人的用户编号", example = "2048")
     private Long leaderUserId;

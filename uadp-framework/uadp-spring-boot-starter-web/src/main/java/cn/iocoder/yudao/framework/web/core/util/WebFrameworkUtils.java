@@ -7,6 +7,7 @@ import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
 import cn.iocoder.yudao.framework.web.config.WebProperties;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,6 +29,7 @@ public class WebFrameworkUtils {
 
     public static final String HEADER_TENANT_ID = "tenant-id";
     public static final String HEADER_X_TENANT_ID = "X-Tenant-Id";
+    public static final String HEADER_H_TENANT_ID = "H-Tenant-Id";
 
     /**
      * 终端的 Header
@@ -58,6 +60,11 @@ public class WebFrameworkUtils {
         HttpServletRequest request = getRequest();
         String xtenantId = request.getHeader(HEADER_X_TENANT_ID);
         return NumberUtil.isNumber(xtenantId) ? Long.valueOf(xtenantId) : null;
+    }
+
+    public static String getH5TenantId() {
+        HttpServletRequest request = getRequest();
+        return request.getHeader(HEADER_H_TENANT_ID);
     }
 
 

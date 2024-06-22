@@ -14,6 +14,7 @@ import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import cn.iocoder.yudao.module.system.api.oauth2.OAuth2TokenApi;
 import cn.iocoder.yudao.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -42,8 +43,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @SuppressWarnings("NullableProblems")
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        //TODO  1.2 模拟 Login 功能，方便日常开发调试
-        if (securityProperties.getMockEnable()) {
+        //H5页面当Http请求头中 有 H-Tenant-Id 则放行,同时mock打开也放行
+        String h5Token = WebFrameworkUtils.getH5TenantId();
+        if (StringUtils.isNotBlank(h5Token) || securityProperties.getMockEnable()) {
             LoginUser loginUser = new LoginUser().setId(1L).setUserType(WebFrameworkUtils.getLoginUserType(request))
                     .setTenantId(WebFrameworkUtils.getTenantId(request));
             // 2. 设置当前用户

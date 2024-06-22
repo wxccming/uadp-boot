@@ -2,10 +2,12 @@ package cn.iocoder.yudao.module.bookstore.service.bookchapter;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterPageReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookchapter.BookChapterDO;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 图书章节 Service 接口
@@ -51,5 +53,12 @@ public interface BookChapterService {
      * @return 图书章节分页
      */
     PageResult<BookChapterDO> getBookChapterPage(BookChapterPageReqVO pageReqVO);
+
+    /**
+     * 获得图书所有章节
+     *
+     * @return 图书所有章节
+     */
+    List<BookChapterDO> getBookChapterList(Long bookNo);
 
 }

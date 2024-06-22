@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterPageReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookchapter.BookChapterDO;
 import cn.iocoder.yudao.module.bookstore.dal.mysql.bookchapter.BookChapterMapper;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.infra.enums.BookStoreErrorCodeConstants.BOOK_CHAPTER_NOT_EXISTS;
@@ -75,4 +78,8 @@ public class BookChapterServiceImpl implements BookChapterService {
         return bookChapterMapper.selectPage(pageReqVO);
     }
 
+    @Override
+    public List<BookChapterDO> getBookChapterList(Long bookNo) {
+        return bookChapterMapper.selectList(BookChapterDO::getBookNo, bookNo);
+    }
 }

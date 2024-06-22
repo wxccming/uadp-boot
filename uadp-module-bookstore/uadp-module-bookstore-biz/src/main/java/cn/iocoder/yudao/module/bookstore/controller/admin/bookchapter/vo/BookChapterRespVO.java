@@ -1,5 +1,7 @@
 package cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo;
 
+import cn.iocoder.yudao.module.infra.convert.Dict;
+import cn.iocoder.yudao.module.infra.convert.DictCovert;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -48,6 +50,7 @@ public class BookChapterRespVO {
     @ExcelProperty("排序")
     private String chapterSeq;
 
+//    @Dict(dictTypeName = "chapterStatus" , suffix = "")
     @Schema(description = "状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
     @ExcelProperty("状态")
     private String chapterStatus;

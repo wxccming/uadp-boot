@@ -146,4 +146,5 @@ public class SourceInfoDO extends BaseDO {
      * 资源类型(00-教案 | 01-课件 | 02-习题 | 03-素材 | 04-试卷 | 05-微课 | 06-拓展 | 07-其它
      */
     private String sourceCategory;
+
 }

@@ -9,6 +9,7 @@ import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
 import cn.iocoder.yudao.module.bookstore.controller.admin.sourceinfo.vo.*;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.sourceinfo.SourceInfoDO;
 import cn.iocoder.yudao.module.bookstore.service.sourceinfo.SourceInfoService;
+import cn.iocoder.yudao.module.infra.convert.UserIdCovert;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,6 +31,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @RestController
 @RequestMapping("/infra/source-info")
 @Validated
+@UserIdCovert
 public class SourceInfoController {
 
     @Resource
