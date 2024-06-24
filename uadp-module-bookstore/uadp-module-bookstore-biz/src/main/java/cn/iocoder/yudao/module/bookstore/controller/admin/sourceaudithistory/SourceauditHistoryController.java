@@ -85,6 +85,14 @@ public class SourceauditHistoryController {
         return success(BeanUtils.toBean(pageResult, SourceauditHistoryRespVO.class));
     }
 
+    @GetMapping("/list")
+    @Operation(summary = "根据资源ID获得资源审核记录(不分页)")
+    //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:query')")
+    public CommonResult<List<SourceauditHistoryRespVO>> getSourceauditHistoryBySourceId(@Valid @RequestParam("sourceId") Long sourceId) {
+        List<SourceauditHistoryDO> sourceauditHistorys = sourceauditHistoryService.getSourceauditHistoryBySourceId(sourceId);
+        return success(BeanUtils.toBean(sourceauditHistorys, SourceauditHistoryRespVO.class));
+    }
+
     @GetMapping("/export-excel")
     @Operation(summary = "导出资源审核记录 Excel")
     //@PreAuthorize("@ss.hasPermission('infra:sourceaudit-history:export')")

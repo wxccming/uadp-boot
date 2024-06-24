@@ -32,6 +32,10 @@ public class BookQtcodeItemRespVO {
     @ExcelProperty("图书编号")
     private Long bookNo;
 
+    @Schema(description = "图书名称")
+    @ExcelProperty("图书名称")
+    private String bookName;
+
     @Schema(description = "备注")
     @ExcelProperty("备注")
     private String remarks;

@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodesource.vo.BookQtcodeSourcePageReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodesource.vo.BookQtcodeSourceSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.H5BookQtcodeSourceDO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -61,5 +62,13 @@ public interface BookQtcodeSourceService {
      * @return 编号
      */
     void saveBookQtcodeSourceList(List<BookQtcodeSourceSaveReqVO> reqVOs);
+
+    /**
+     * 根据章节编号获取所有的资源信息
+     *
+     * @param chapter_id 章节编号
+     * @return 二维码资源分页
+     */
+    List<H5BookQtcodeSourceDO> selectQtSourceList(Long chapter_id);
 
 }

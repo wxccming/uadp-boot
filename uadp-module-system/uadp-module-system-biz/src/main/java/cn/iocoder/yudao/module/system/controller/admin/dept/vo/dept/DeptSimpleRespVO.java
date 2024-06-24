@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Schema(description = "管理后台 - 部门精简信息 Response VO")
 @Data
 @NoArgsConstructor
@@ -20,4 +22,5 @@ public class DeptSimpleRespVO {
     @Schema(description = "父部门 ID", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
     private Long parentId;
 
+    private List<DeptSimpleRespVO> children;
 }

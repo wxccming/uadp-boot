@@ -93,6 +93,7 @@ public class SourceInfoServiceImpl implements SourceInfoService {
         SourceauditHistoryDO sourceauditHistoryDO = new SourceauditHistoryDO();
         sourceauditHistoryDO.setSourceId(auditReqVO.getId());
         sourceauditHistoryDO.setSourceName(sourceInfo.getSourceName());
+        sourceauditHistoryDO.setAuditStatus(sourceInfo.getAuditStatus());
         sourceauditHistoryDO.setAuditor(auditReqVO.getAuditor());
         sourceauditHistoryDO.setAuditMsg(auditReqVO.getAuditMsg());
         sourceauditHistoryDO.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());

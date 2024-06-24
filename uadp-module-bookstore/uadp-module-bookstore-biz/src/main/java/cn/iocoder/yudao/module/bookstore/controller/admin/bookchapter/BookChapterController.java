@@ -93,19 +93,18 @@ public class BookChapterController {
     public CommonResult<PageResult<BookChapterRespVO>> getBookChapterPageTree(@Valid @ParameterObject BookChapterPageReqVO pageReqVO) {
         pageReqVO.setPageSize(PageParam.PAGE_SIZE_NONE);
         List<BookChapterDO> bookChapters = bookChapterService.getBookChapterPage(pageReqVO).getList();
-        List<BookChapterDO> result = TreeUtil.listToTree(bookChapters);
-        PageResult<BookChapterDO> mapPageResult = new PageResult<>(result, (long) result.size());
-        return success(BeanUtils.toBean(mapPageResult,BookChapterRespVO.class));
+        List<BookChapterRespVO> result = TreeUtil.listToTree(bookChapters);
+        PageResult<BookChapterRespVO> mapPageResult = new PageResult<>(result, (long) result.size());
+        return success(mapPageResult);
     }
 
     @GetMapping("/book-tree")
     @Operation(summary = "获得某本图书下所有章节,以树型展示")
-    public CommonResult<PageResult<BookChapterRespVO>> getAllBookChapterTree(@Valid @RequestParam("bookNo") Long bookNo) {
+    public CommonResult<List<BookChapterRespVO>> getAllBookChapterTree(@Valid @RequestParam("bookNo") Long bookNo) {
         List<BookChapterDO> bookChapters = bookChapterService.getBookChapterList(bookNo);
         bookChapters.sort(Comparator.comparing(BookChapterDO::getId));
-        List<BookChapterDO> result = TreeUtil.listToTree(bookChapters);
-        PageResult<BookChapterDO> mapPageResult = new PageResult<>(result, (long) result.size());
-        return success(BeanUtils.toBean(mapPageResult,BookChapterRespVO.class));
+        List<BookChapterRespVO> result = TreeUtil.listToTree(bookChapters);
+        return success(BeanUtils.toBean(result,BookChapterRespVO.class));
     }
 
     @GetMapping("/export-excel")

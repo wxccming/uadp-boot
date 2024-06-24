@@ -117,6 +117,7 @@ public interface BaseMapperX<T> extends MPJBaseMapper<T> {
         return selectList(new QueryWrapper<T>().eq(field, value));
     }
 
+
     default List<T> selectList(SFunction<T, ?> field, Object value) {
         return selectList(new LambdaQueryWrapper<T>().eq(field, value));
     }

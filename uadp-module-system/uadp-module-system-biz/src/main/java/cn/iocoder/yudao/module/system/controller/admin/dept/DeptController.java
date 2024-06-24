@@ -84,8 +84,8 @@ public class DeptController {
     public CommonResult<List<DeptSimpleRespVO>> getSimpleDeptTreeList() {
         List<DeptDO> list = deptService.getDeptList(
                 new DeptListReqVO().setStatus(CommonStatusEnum.ENABLE.getStatus()));
-        List<DeptDO> deptDOS = ListConvertTreeUtil.listToTree(list);
-        return success(BeanUtils.toBean(deptDOS, DeptSimpleRespVO.class));
+        List<DeptSimpleRespVO> deptSimples = ListConvertTreeUtil.listToTree(list);
+        return success(deptSimples);
     }
 
     @GetMapping("/get")

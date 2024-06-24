@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.sourceaudithistory.vo.
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.sourceaudithistory.SourceauditHistoryDO;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 资源审核记录 Service 接口
@@ -51,5 +52,13 @@ public interface SourceauditHistoryService {
      * @return 资源审核记录分页
      */
     PageResult<SourceauditHistoryDO> getSourceauditHistoryPage(SourceauditHistoryPageReqVO pageReqVO);
+
+    /**
+     * 根据资源ID获得资源审核记录分页
+     *
+     * @param pageReqVO 分页查询
+     * @return 资源审核记录分页
+     */
+    List<SourceauditHistoryDO> getSourceauditHistoryBySourceId(Long sourceId);
 
 }

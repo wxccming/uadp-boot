@@ -6,6 +6,7 @@ import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodesource.vo.BookQtcodeSourcePageReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodesource.vo.BookQtcodeSourceSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.H5BookQtcodeSourceDO;
 import cn.iocoder.yudao.module.bookstore.dal.mysql.bookqtcodesource.BookQtcodeSourceMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -83,5 +84,10 @@ public class BookQtcodeSourceServiceImpl implements BookQtcodeSourceService {
         });
         //批量插入数据
         bookQtcodeSourceMapper.insertBatch(entities);
+    }
+
+    @Override
+    public List<H5BookQtcodeSourceDO> selectQtSourceList(Long chapter_id) {
+        return bookQtcodeSourceMapper.selectQtSourceList(chapter_id);
     }
 }

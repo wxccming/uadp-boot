@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeitem;
 
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.KeySequence;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -42,6 +43,12 @@ public class BookQtcodeItemDO extends BaseDO {
      * 图书编号
      */
     private Long bookNo;
+
+    /**
+     * 图书名称
+     */
+    private String bookName;
+
     /**
      * 备注
      */

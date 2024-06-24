@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
+import cn.iocoder.yudao.framework.common.exception.ErrorCode;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
@@ -12,6 +13,7 @@ import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcod
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
 import cn.iocoder.yudao.module.bookstore.service.bookqtcodeinfo.BookQtcodeInfoService;
 import cn.iocoder.yudao.module.bookstore.service.bookqtcodesource.BookQtcodeSourceService;
+import cn.iocoder.yudao.module.infra.enums.BookStoreErrorCodeConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,9 +27,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.error;
 
 @Tag(name = "管理后台 - 图书二维码信息")
 @RestController
@@ -83,13 +87,38 @@ public class BookQtcodeInfoController {
     //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
     public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfo(@RequestParam("id") Long id) {
         BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfo(id);
-        //bookQtcodeInfo.setDtcodeContext(bookQtcodeInfoService.genQrCode(bookQtcodeInfo.getDtcodeAddress()));
         List<BookQtcodeSourceDO> bookQtcodeSources = bookQtcodeInfoService.selectListByDtcodeId(id);
         BookQtcodeInfoRespVO bookQtcodeInfoRespVO = BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class);
         List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSources = BeanUtils.toBean(bookQtcodeSources, SimpleBookQtcodeSourceVO.class);
         bookQtcodeInfoRespVO.setSimpleBookQtcodeSourceVO(simpleBookQtcodeSources);
         return success(bookQtcodeInfoRespVO);
     }
+
+    @GetMapping("/get-bybook-qtcode")
+    @Operation(summary = "根据图书编号获取二维码信息")
+    @Parameter(name = "bookNo", description = "图书编号", required = true)
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
+    public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfoBybookNo(@RequestParam("bookNo") Long bookNo) {
+        BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfoByBookNo(bookNo);
+        return success(BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class));
+    }
+
+    @GetMapping("/get-bychapterId-qtcode")
+    @Operation(summary = "根据章节编号获取二维码信息")
+    @Parameter(name = "chapterId", description = "章节编号", required = true)
+    //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
+    public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfoByChapterId(@RequestParam("chapterId") Long chapterId) {
+        BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfoByChapterId(chapterId);
+        if(!Objects.isNull(bookQtcodeInfo)){
+            List<BookQtcodeSourceDO> bookQtcodeSources = bookQtcodeInfoService.selectListByDtcodeId(bookQtcodeInfo.getId());
+            BookQtcodeInfoRespVO bookQtcodeInfoRespVO = BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class);
+            List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSources = BeanUtils.toBean(bookQtcodeSources, SimpleBookQtcodeSourceVO.class);
+            bookQtcodeInfoRespVO.setSimpleBookQtcodeSourceVO(simpleBookQtcodeSources);
+            return success(bookQtcodeInfoRespVO);
+        }
+        return success(BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class));
+    }
+
 
     @GetMapping("/page")
     @Operation(summary = "获得图书二维码信息分页")

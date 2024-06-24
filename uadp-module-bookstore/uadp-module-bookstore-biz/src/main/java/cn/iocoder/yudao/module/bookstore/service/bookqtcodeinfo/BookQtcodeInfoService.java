@@ -79,6 +79,28 @@ public interface BookQtcodeInfoService {
      */
     Long updateBookQtcodeInfoAndQtcodeResource(@Valid ExtraBookQtcodeInfoSaveReqVO reqVO);
 
+    /**
+     * 根据二维码ID获取图书信息
+     *
+     * @param dtcodeId 编号
+     * @return 图书二维码信息
+     */
     List<BookQtcodeSourceDO> selectListByDtcodeId(Long dtcodeId);
+
+    /**
+     * 根据图书编号获取图书信息
+     *
+     * @param bookNo 编号
+     * @return 图书二维码信息
+     */
+    BookQtcodeInfoDO getBookQtcodeInfoByBookNo(Long bookNo);
+
+    /**
+     * 根据图书章节获取图书信息
+     *
+     * @param chapterId 编号
+     * @return 图书二维码信息
+     */
+    BookQtcodeInfoDO getBookQtcodeInfoByChapterId(Long chapterId);
 
 }

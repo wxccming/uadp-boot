@@ -5,7 +5,12 @@ import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoPageReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.H5BookQtcodeSourceDO;
+import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 图书二维码信息 Mapper
@@ -27,5 +32,11 @@ public interface BookQtcodeInfoMapper extends BaseMapperX<BookQtcodeInfoDO> {
                 .eqIfPresent(BookQtcodeInfoDO::getBookNo, reqVO.getBookNo())
                 .orderByDesc(BookQtcodeInfoDO::getId));
     }
+
+    default BookQtcodeInfoDO selectQtByChapterId(Long chapterId) {
+        return selectOne(BookQtcodeInfoDO::getChapterId, chapterId);
+    }
+
+    BookQtcodeInfoDO selectQtByBookNo(@Param("book_no") Long book_no);
 
 }

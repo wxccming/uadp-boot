@@ -5,6 +5,7 @@ import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodesource.vo.BookQtcodeSourcePageReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.H5BookQtcodeSourceDO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -35,6 +36,8 @@ public interface BookQtcodeSourceMapper extends BaseMapperX<BookQtcodeSourceDO> 
     default List<BookQtcodeSourceDO> selectListByDtcodeId(Long dtcodeId) {
         return selectList(BookQtcodeSourceDO::getDtcodeId, dtcodeId);
     }
+
+    List<H5BookQtcodeSourceDO> selectQtSourceList(@Param("chapter_id") Long chapter_id);
 
     @Delete("DELETE FROM infra_book_qtcode_source WHERE dtcode_id = #{id}")
     Integer deleteByDtcodeId(@Param("id") Long id);

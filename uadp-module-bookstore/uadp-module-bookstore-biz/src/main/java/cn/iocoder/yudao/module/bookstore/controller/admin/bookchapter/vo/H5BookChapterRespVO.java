@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo;
 
 import cn.iocoder.yudao.module.infra.convert.Dict;
-import cn.iocoder.yudao.module.infra.convert.DictCovert;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,15 +12,11 @@ import java.util.List;
 @Schema(description = "管理后台 - 图书章节 Response VO")
 @Data
 @ExcelIgnoreUnannotated
-public class BookChapterRespVO {
+public class H5BookChapterRespVO {
 
     @Schema(description = "章节编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "13160")
     @ExcelProperty("章节编号")
     private Long id;
-
-//    @Schema(description = "章节编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "4649")
-//    @ExcelProperty("章节编号")
-//    private String chapterId;
 
     @Schema(description = "章节名称", requiredMode = Schema.RequiredMode.REQUIRED, example = "王五")
     @ExcelProperty("章节名称")
@@ -43,7 +38,7 @@ public class BookChapterRespVO {
     @ExcelProperty("章节等级")
     private Long depth;
 
-    @Schema(description = "是否最小节点", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "是否最小节点")
     @ExcelProperty("是否最小节点")
     private String isLeaf;
 
@@ -51,12 +46,12 @@ public class BookChapterRespVO {
     @ExcelProperty("排序")
     private String chapterSeq;
 
-//    @Dict(dictTypeName = "chapterStatus" , suffix = "")
-    @Schema(description = "状态", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Dict(dictTypeName = "chapterStatus")
+    @Schema(description = "状态")
     @ExcelProperty("状态")
     private String chapterStatus;
 
-    @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "创建时间")
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
 
@@ -68,6 +63,6 @@ public class BookChapterRespVO {
     @ExcelProperty("章节Base64内容")
     private String chapterBase;
 
-    private List<BookChapterRespVO> children;
+    private List<H5BookChapterRespVO> children;
 
 }
