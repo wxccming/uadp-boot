@@ -1,24 +1,23 @@
 package cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo;
 
 import cn.iocoder.yudao.framework.apilog.core.annotation.ApiAccessLog;
-import cn.iocoder.yudao.framework.common.exception.ErrorCode;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.*;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoPageReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoRespVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.ExtraBookQtcodeInfoSaveReqVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.SimpleBookQtcodeSourceVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
 import cn.iocoder.yudao.module.bookstore.service.bookqtcodeinfo.BookQtcodeInfoService;
-import cn.iocoder.yudao.module.bookstore.service.bookqtcodesource.BookQtcodeSourceService;
-import cn.iocoder.yudao.module.infra.enums.BookStoreErrorCodeConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +30,6 @@ import java.util.Objects;
 
 import static cn.iocoder.yudao.framework.apilog.core.enums.OperateTypeEnum.EXPORT;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-import static cn.iocoder.yudao.framework.common.pojo.CommonResult.error;
 
 @Tag(name = "管理后台 - 图书二维码信息")
 @RestController
@@ -42,15 +40,14 @@ public class BookQtcodeInfoController {
     @Resource
     private BookQtcodeInfoService bookQtcodeInfoService;
 
-    @Resource
-    private BookQtcodeSourceService bookQtcodeSourceService;
-
+/*
     @PostMapping("/create")
     @Operation(summary = "创建图书二维码信息")
     //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:create')")
     public CommonResult<Long> createBookQtcodeInfo(@Valid @RequestBody BookQtcodeInfoSaveReqVO createReqVO) {
         return success(bookQtcodeInfoService.createBookQtcodeInfo(createReqVO));
     }
+*/
 
     @PostMapping("/saveResources")
     @Operation(summary = "保存图书二维码信息和资源信息")
@@ -64,6 +61,7 @@ public class BookQtcodeInfoController {
         return success(bookQtcodeInfoService.updateBookQtcodeInfoAndQtcodeResource(reqVO));
     }
 
+/*
     @PutMapping("/update")
     @Operation(summary = "更新图书二维码信息")
     //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:update')")
@@ -71,6 +69,7 @@ public class BookQtcodeInfoController {
         bookQtcodeInfoService.updateBookQtcodeInfo(updateReqVO);
         return success(true);
     }
+*/
 
     @DeleteMapping("/delete")
     @Operation(summary = "删除图书二维码信息")

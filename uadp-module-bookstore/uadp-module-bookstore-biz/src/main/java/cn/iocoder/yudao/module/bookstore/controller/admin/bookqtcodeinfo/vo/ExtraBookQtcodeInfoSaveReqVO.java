@@ -37,6 +37,9 @@ public class ExtraBookQtcodeInfoSaveReqVO {
     @Schema(description = "图书编号")
     private Long bookNo;
 
+    @Schema(description = "适用场景")
+    private String applicaScens;
+
     @Schema(description = "资源信息")
     private List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSourceVO;
 

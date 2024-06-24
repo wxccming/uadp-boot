@@ -63,18 +63,24 @@ public class BookQtcodeInfoServiceImpl implements BookQtcodeInfoService {
         bookQtcodeInfoMapper.updateById(updateObj);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteBookQtcodeInfo(Long id) {
         // 校验存在
-        validateBookQtcodeInfoExists(id);
+        BookQtcodeInfoDO bookQtcodeInfoDO = validateBookQtcodeInfoExists(id);
         // 删除
         bookQtcodeInfoMapper.deleteById(id);
+        //清除资源表中此二维码的所有数据
+        bookQtcodeSourceMapper.deleteByDtcodeId(bookQtcodeInfoDO.getId());
     }
 
-    private void validateBookQtcodeInfoExists(Long id) {
-        if (bookQtcodeInfoMapper.selectById(id) == null) {
+    private BookQtcodeInfoDO validateBookQtcodeInfoExists(Long id) {
+        BookQtcodeInfoDO bookQtcodeInfoDO = bookQtcodeInfoMapper.selectById(id);
+
+        if (bookQtcodeInfoDO == null) {
             throw exception(BOOK_QTCODE_INFO_NOT_EXISTS);
         }
+        return bookQtcodeInfoDO;
     }
 
     @Override
