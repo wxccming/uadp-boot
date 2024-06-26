@@ -16,8 +16,8 @@
         <module>uadp-module-system</module>
         <module>uadp-module-infra</module>
         <module>uadp-module-bookstore</module>
-        <module>uadp-ui-server</module>
-        <module>xhsd-ui-server</module>
+        <!--<module>uadp-ui-server</module>
+        <module>xhsd-ui-server</module>-->
     </modules>
 
     <name>${project.artifactId}</name>
