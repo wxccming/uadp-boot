@@ -5,7 +5,7 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.bookinfo.vo.BookInfoPa
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookinfo.vo.BookInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookinfo.BookInfoDO;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 /**
  * 图书信息 Service 接口

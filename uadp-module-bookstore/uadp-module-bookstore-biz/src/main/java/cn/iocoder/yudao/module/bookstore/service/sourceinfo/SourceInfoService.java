@@ -7,7 +7,7 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.sourceinfo.vo.SourceIn
 import cn.iocoder.yudao.module.bookstore.controller.admin.sourceinfo.vo.SourceInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.sourceinfo.SourceInfoDO;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**

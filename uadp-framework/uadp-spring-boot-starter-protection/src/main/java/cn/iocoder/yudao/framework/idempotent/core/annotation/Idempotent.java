@@ -1,7 +1,7 @@
 package cn.iocoder.yudao.framework.idempotent.core.annotation;
 
-import cn.iocoder.yudao.framework.idempotent.core.keyresolver.impl.DefaultIdempotentKeyResolver;
 import cn.iocoder.yudao.framework.idempotent.core.keyresolver.IdempotentKeyResolver;
+import cn.iocoder.yudao.framework.idempotent.core.keyresolver.impl.DefaultIdempotentKeyResolver;
 import cn.iocoder.yudao.framework.idempotent.core.keyresolver.impl.ExpressionIdempotentKeyResolver;
 import cn.iocoder.yudao.framework.idempotent.core.keyresolver.impl.UserIdempotentKeyResolver;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 幂等注解
  *
- * @author 晟云鑫通
+ * @author 芋道源码
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

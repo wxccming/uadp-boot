@@ -6,7 +6,7 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookCha
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookchapter.BookChapterDO;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**

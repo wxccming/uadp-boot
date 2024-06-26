@@ -8,7 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springdoc.api.annotations.ParameterObject;
+
 
 import ${jakartaPackage}.validation.constraints.*;
 import ${jakartaPackage}.validation.*;

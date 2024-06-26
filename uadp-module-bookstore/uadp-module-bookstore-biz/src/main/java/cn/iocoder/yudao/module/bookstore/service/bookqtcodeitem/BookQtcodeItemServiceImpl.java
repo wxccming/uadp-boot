@@ -10,7 +10,7 @@ import cn.iocoder.yudao.module.bookstore.dal.mysql.bookqtcodeitem.BookQtcodeItem
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.infra.enums.BookStoreErrorCodeConstants.BOOK_QTCODE_ITEM_NOT_EXISTS;

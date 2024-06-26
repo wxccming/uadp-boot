@@ -8,7 +8,7 @@ import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcod
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**
