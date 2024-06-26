@@ -11,6 +11,7 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeitem.vo.Book
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeitem.vo.BookQtcodeItemSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeitem.BookQtcodeItemDO;
 import cn.iocoder.yudao.module.bookstore.service.bookqtcodeitem.BookQtcodeItemService;
+import cn.iocoder.yudao.module.infra.convert.UserCovert;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,6 +33,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @RestController
 @RequestMapping("/infra/book-qtcode-item")
 @Validated
+@UserCovert
 public class BookQtcodeItemController {
 
     @Resource

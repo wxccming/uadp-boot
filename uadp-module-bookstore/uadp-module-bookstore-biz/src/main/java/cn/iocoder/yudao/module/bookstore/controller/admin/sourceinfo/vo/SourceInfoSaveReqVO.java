@@ -86,8 +86,8 @@ public class SourceInfoSaveReqVO {
     @Schema(description = "备用字段2")
     private String spareFiled2;
 
-    @Schema(description = "上传用户(与创建人一致)", example = "6099")
-    private String uploadUserId;
+//    @Schema(description = "上传用户(与创建人一致)")
+//    private Long uploadUserId;
 
     @Schema(description = "审核用户1", example = "7649")
     private String auditUser1Id;

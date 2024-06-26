@@ -34,7 +34,7 @@ public class BookQtcodeInfoDO extends BaseDO {
     /**
      * 所属项目编号
      */
-    private String itemId;
+    private Long itemId;
     /**
      * 二维码地址
      */
@@ -68,6 +68,6 @@ public class BookQtcodeInfoDO extends BaseDO {
     /**
      * 适用场景
      */
-    private Long applicaScens;
+//    private String applicaScens;
 
 }

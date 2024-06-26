@@ -19,8 +19,8 @@ public class XhsdDataPermissionRule implements DataPermissionRule {
     public Set<String> getTableNames() {
         return Sets.newHashSet(
                 "system_users",
-                "infra_book_chapter",
-                "infra_book_info",
+//                "infra_book_chapter",
+//                "infra_book_info",
                 "infra_book_qtcode_info",
                 "infra_book_qtcode_item",
                 "infra_book_qtcode_source",

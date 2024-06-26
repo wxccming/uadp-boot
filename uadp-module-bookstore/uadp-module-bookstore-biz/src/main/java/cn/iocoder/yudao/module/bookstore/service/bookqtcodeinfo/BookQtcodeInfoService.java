@@ -6,6 +6,7 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.Book
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.ExtraBookQtcodeInfoSaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodeinfo.BookQtcodeInfoDO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -90,17 +91,20 @@ public interface BookQtcodeInfoService {
     /**
      * 根据图书编号获取图书信息
      *
-     * @param bookNo 编号
+     * @param bookNo 图书编号
+     * @param itemId 项目编号
      * @return 图书二维码信息
      */
-    BookQtcodeInfoDO getBookQtcodeInfoByBookNo(Long bookNo);
+    BookQtcodeInfoDO getBookQtcodeInfoByBookNo(Long bookNo,Long itemId);
 
     /**
      * 根据图书章节获取图书信息
      *
-     * @param chapterId 编号
+     * @param itemId 项目编号
+     * @param bookNo 图书编号
+     * @param chapterId 章节编号
      * @return 图书二维码信息
      */
-    BookQtcodeInfoDO getBookQtcodeInfoByChapterId(Long chapterId);
+    BookQtcodeInfoDO getBookQtcodeInfoByChapterId(Long itemId, Long bookNo, Long chapterId);
 
 }

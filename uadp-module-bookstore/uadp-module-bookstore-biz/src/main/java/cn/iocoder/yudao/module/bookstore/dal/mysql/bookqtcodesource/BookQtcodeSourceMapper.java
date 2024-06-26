@@ -33,11 +33,15 @@ public interface BookQtcodeSourceMapper extends BaseMapperX<BookQtcodeSourceDO> 
                 .orderByDesc(BookQtcodeSourceDO::getId));
     }
 
-    default List<BookQtcodeSourceDO> selectListByDtcodeId(Long dtcodeId) {
-        return selectList(BookQtcodeSourceDO::getDtcodeId, dtcodeId);
-    }
+//    default List<BookQtcodeSourceDO> selectListByDtcodeId(Long dtcodeId) {
+//        return selectList(BookQtcodeSourceDO::getDtcodeId, dtcodeId);
+//    }
 
-    List<H5BookQtcodeSourceDO> selectQtSourceList(@Param("chapter_id") Long chapter_id);
+    List<BookQtcodeSourceDO> selectListByDtcodeId(@Param("dtcode_id") Long dtcode_id);
+
+    List<H5BookQtcodeSourceDO> selectQtSourceList(@Param("item_id") Long item_id,
+                                                  @Param("chapter_id") Long chapter_id,
+                                                  @Param("applica_scens") String applica_scens);
 
     @Delete("DELETE FROM infra_book_qtcode_source WHERE dtcode_id = #{id}")
     Integer deleteByDtcodeId(@Param("id") Long id);

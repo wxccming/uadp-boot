@@ -158,4 +158,14 @@ public class H5BookQtcodeSourceDO extends BaseDO {
      */
     private String sourceCategory;
 
+    /**
+     * 图书名称
+     */
+    private String bookName;
+
+    /**
+     * 章节名称
+     */
+    private String chapterName;
+
 }

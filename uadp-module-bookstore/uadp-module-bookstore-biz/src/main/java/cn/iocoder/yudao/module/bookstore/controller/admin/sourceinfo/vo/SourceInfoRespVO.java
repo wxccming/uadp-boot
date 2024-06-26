@@ -1,6 +1,6 @@
 package cn.iocoder.yudao.module.bookstore.controller.admin.sourceinfo.vo;
 
-import cn.iocoder.yudao.module.infra.convert.UserId;
+import cn.iocoder.yudao.module.infra.convert.User;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -109,17 +109,17 @@ public class SourceInfoRespVO {
     @ExcelProperty("备用字段2")
     private String spareFiled2;
 
-    @UserId
-    @Schema(description = "上传用户(与创建人一致)", example = "6099")
+    @User
+    @Schema(description = "上传用户(与创建人一致)")
     @ExcelProperty("上传用户(与创建人一致)")
     private String uploadUserId;
 
-    @UserId
+    @User
     @Schema(description = "审核用户1", example = "7649")
     @ExcelProperty("审核用户1")
     private String auditUser1Id;
 
-    @UserId
+    @User
     @Schema(description = "审核用户2", example = "5749")
     @ExcelProperty("审核用户2")
     private String auditUser2Id;

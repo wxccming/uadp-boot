@@ -20,8 +20,8 @@ public class BookQtcodeInfoPageReqVO extends PageParam {
     @Schema(description = "二维码名称", example = "王五")
     private String dtcodeName;
 
-    @Schema(description = "所属项目编号", example = "12345")
-    private String itemId;
+    @Schema(description = "所属项目编号")
+    private Long itemId;
 
     @Schema(description = "二维码地址")
     private String dtcodeAddress;

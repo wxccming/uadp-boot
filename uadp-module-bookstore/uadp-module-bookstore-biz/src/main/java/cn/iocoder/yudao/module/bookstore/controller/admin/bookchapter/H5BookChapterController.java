@@ -6,14 +6,14 @@ import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
 import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterPageReqVO;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterRespVO;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.BookChapterSaveReqVO;
-import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.H5BookChapterRespVO;
+import cn.iocoder.yudao.module.bookstore.controller.admin.bookchapter.vo.*;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookchapter.BookChapterDO;
+import cn.iocoder.yudao.module.bookstore.dal.dataobject.bookinfo.BookInfoDO;
 import cn.iocoder.yudao.module.bookstore.service.bookchapter.BookChapterService;
+import cn.iocoder.yudao.module.bookstore.service.bookinfo.BookInfoService;
 import cn.iocoder.yudao.module.bookstore.util.TreeUtil;
 import cn.iocoder.yudao.module.infra.convert.DictCovert;
+import cn.iocoder.yudao.module.infra.convert.UserCovert;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,10 +36,14 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @RequestMapping("/infra/h5-book-chapter")
 @Validated
 @DictCovert
+@UserCovert
 public class H5BookChapterController {
 
     @Resource
     private BookChapterService bookChapterService;
+
+    @Resource
+    private BookInfoService bookInfoService;
 
     @GetMapping("/h5-get")
     @Operation(summary = "获得图书章节")
@@ -48,6 +52,15 @@ public class H5BookChapterController {
     public CommonResult<H5BookChapterRespVO> getBookChapter(@RequestParam("id") Long id) {
         BookChapterDO bookChapter = bookChapterService.getBookChapter(id);
         return success(BeanUtils.toBean(bookChapter, H5BookChapterRespVO.class));
+    }
+
+    @GetMapping("/h5-book-detail")
+    @Operation(summary = "获得图书详情")
+    @Parameter(name = "book_no", description = "编号", required = true)
+    //@PreAuthorize("@ss.hasPermission('infra:book-chapter:query')")
+    public CommonResult<H5BookRespVO> getBookDetail(@RequestParam("book_no") Long book_no) {
+        BookInfoDO bookInfo = bookInfoService.getBookInfo(book_no);
+        return success(BeanUtils.toBean(bookInfo, H5BookRespVO.class));
     }
 
     @GetMapping("/h5-book-tree")

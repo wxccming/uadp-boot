@@ -36,7 +36,6 @@ public interface BookQtcodeInfoMapper extends BaseMapperX<BookQtcodeInfoDO> {
     default BookQtcodeInfoDO selectQtByChapterId(Long chapterId) {
         return selectOne(BookQtcodeInfoDO::getChapterId, chapterId);
     }
-
-    BookQtcodeInfoDO selectQtByBookNo(@Param("book_no") Long book_no);
+    BookQtcodeInfoDO selectQtByBookNo(@Param("book_no") Long book_no,@Param("item_id") Long item_id);
 
 }

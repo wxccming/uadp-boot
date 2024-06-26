@@ -1,6 +1,6 @@
 package cn.iocoder.yudao.module.bookstore.controller.admin.sourceaudithistory.vo;
 
-import cn.iocoder.yudao.module.infra.convert.UserId;
+import cn.iocoder.yudao.module.infra.convert.User;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,7 +25,7 @@ public class SourceauditHistoryRespVO {
     @ExcelProperty("资源名称")
     private String sourceName;
 
-    @UserId
+    @User
     @Schema(description = "审核人", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("审核人")
     private String auditor;

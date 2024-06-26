@@ -6,6 +6,7 @@ import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.object.BeanUtils;
+import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoPageReqVO;
 import cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeinfo.vo.BookQtcodeInfoSaveReqVO;
@@ -109,14 +110,14 @@ public class BookQtcodeInfoServiceImpl implements BookQtcodeInfoService {
         //书的码,如果已存在，不允许加
         if(StringUtils.equalsIgnoreCase("00",reqVO.getDtcodeCategory())
                 && !Objects.isNull(reqVO.getBookNo())){
-            BookQtcodeInfoDO bookQtcodeInfoDO = bookQtcodeInfoMapper.selectQtByBookNo(reqVO.getBookNo());
+            BookQtcodeInfoDO bookQtcodeInfoDO = bookQtcodeInfoMapper.selectQtByBookNo(reqVO.getBookNo(),reqVO.getItemId());
             if(!Objects.isNull(bookQtcodeInfoDO)) {
                 throw exception(BookStoreErrorCodeConstants.BOOK_QTCODE_INFO_EXISTS);
             }
         } else if(StringUtils.equalsIgnoreCase("01",reqVO.getDtcodeCategory())
                 && !Objects.isNull(reqVO.getChapterId())){
             //章节的码,如果已存在，不允许加
-            BookQtcodeInfoDO bookQtcodeInfoDO = bookQtcodeInfoMapper.selectQtByChapterId(reqVO.getChapterId());
+            BookQtcodeInfoDO bookQtcodeInfoDO = getBookQtcodeInfoByChapterId(reqVO.getItemId(), reqVO.getBookNo(), reqVO.getChapterId());
             if(!Objects.isNull(bookQtcodeInfoDO)) {
                 throw exception(BookStoreErrorCodeConstants.CHAPTER_QTCODE_INFO_EXISTS);
             }
@@ -191,12 +192,15 @@ public class BookQtcodeInfoServiceImpl implements BookQtcodeInfoService {
     }
 
     @Override
-    public BookQtcodeInfoDO getBookQtcodeInfoByBookNo(Long bookNo) {
-        return bookQtcodeInfoMapper.selectQtByBookNo(bookNo);
+    public BookQtcodeInfoDO getBookQtcodeInfoByBookNo(Long bookNo,Long itemId) {
+        return bookQtcodeInfoMapper.selectQtByBookNo(bookNo,itemId);
     }
 
     @Override
-    public BookQtcodeInfoDO getBookQtcodeInfoByChapterId(Long chapterId) {
-        return bookQtcodeInfoMapper.selectOne(BookQtcodeInfoDO::getChapterId, chapterId);
+    public BookQtcodeInfoDO getBookQtcodeInfoByChapterId(Long itemId, Long bookNo, Long chapterId) {
+        return bookQtcodeInfoMapper.selectOne(new LambdaQueryWrapperX<BookQtcodeInfoDO>()
+                .eq(BookQtcodeInfoDO::getItemId, itemId)
+                .eq(BookQtcodeInfoDO::getBookNo, bookNo)
+                .eq(BookQtcodeInfoDO::getChapterId, chapterId));
     }
 }

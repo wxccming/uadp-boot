@@ -44,6 +44,7 @@ public class SourceInfoServiceImpl implements SourceInfoService {
         // 插入
         SourceInfoDO sourceInfo = BeanUtils.toBean(createReqVO, SourceInfoDO.class);
         sourceInfo.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
+        sourceInfo.setUploadUserId(SecurityFrameworkUtils.getLoginUserId());
         sourceInfoMapper.insert(sourceInfo);
         // 返回
         return sourceInfo.getId();
@@ -60,6 +61,7 @@ public class SourceInfoServiceImpl implements SourceInfoService {
             sourceInfo.setSizeUnit(vo.getSizeUnit());
             sourceInfo.setSourceName(vo.getSourceName());
             sourceInfo.setDeptId(SecurityFrameworkUtils.getLoginUserDeptId());
+            sourceInfo.setUploadUserId(SecurityFrameworkUtils.getLoginUserId());
             //资源默认为未审核状态
             sourceInfo.setSourceStatus("0");
             entities.add(sourceInfo);

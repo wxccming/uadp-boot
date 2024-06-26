@@ -17,9 +17,8 @@ public class ExtraBookQtcodeInfoSaveReqVO {
     @NotEmpty(message = "二维码名称不能为空")
     private String dtcodeName;
 
-    @Schema(description = "所属项目编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "12345")
-    @NotEmpty(message = "所属项目编号不能为空")
-    private String itemId;
+    @Schema(description = "所属项目编号", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Long itemId;
 
     @Schema(description = "二维码地址")
     private String dtcodeAddress;
@@ -37,8 +36,8 @@ public class ExtraBookQtcodeInfoSaveReqVO {
     @Schema(description = "图书编号")
     private Long bookNo;
 
-    @Schema(description = "适用场景")
-    private String applicaScens;
+//    @Schema(description = "适用场景")
+//    private String applicaScens;
 
     @Schema(description = "资源信息")
     private List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSourceVO;

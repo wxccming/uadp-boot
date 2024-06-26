@@ -115,7 +115,6 @@ public class DictConfiguration {
                 lists.forEach(e -> {
                     parseResult(e);
                 });
-                System.out.println("111");
             }
             //判断每一个字典是否有Dict注解
             if (Objects.nonNull(field.getAnnotation(Dict.class))) {
@@ -144,7 +143,10 @@ public class DictConfiguration {
         Object key = field.get(obj);
         if(!Objects.isNull(key)){
             name.setAccessible(true);
-            name.set(obj, dictitemValMap.get(key.toString()));
+            String value = dictitemValMap.get(key.toString());
+            if(StringUtils.isNotBlank(value)){
+                name.set(obj, value);
+            }
         }
         name.setAccessible(false);
         field.setAccessible(false);

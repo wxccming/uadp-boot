@@ -11,12 +11,11 @@ import cn.iocoder.yudao.module.bookstore.controller.admin.sourceaudithistory.vo.
 import cn.iocoder.yudao.module.bookstore.controller.admin.sourceaudithistory.vo.SourceauditHistorySaveReqVO;
 import cn.iocoder.yudao.module.bookstore.dal.dataobject.sourceaudithistory.SourceauditHistoryDO;
 import cn.iocoder.yudao.module.bookstore.service.sourceaudithistory.SourceauditHistoryService;
-import cn.iocoder.yudao.module.infra.convert.UserIdCovert;
+import cn.iocoder.yudao.module.infra.convert.UserCovert;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +33,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 @RestController
 @RequestMapping("/infra/sourceaudit-history")
 @Validated
-@UserIdCovert
+@UserCovert
 public class SourceauditHistoryController {
 
     @Resource

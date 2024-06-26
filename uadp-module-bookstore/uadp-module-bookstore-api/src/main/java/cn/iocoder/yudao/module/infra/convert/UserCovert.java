@@ -2,14 +2,9 @@ package cn.iocoder.yudao.module.infra.convert;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.FIELD})
+@Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface UserId {
+public @interface UserCovert {
  
-    /**
-     * 字典类型名称
-     */
-    String userId() default "";
-
 }

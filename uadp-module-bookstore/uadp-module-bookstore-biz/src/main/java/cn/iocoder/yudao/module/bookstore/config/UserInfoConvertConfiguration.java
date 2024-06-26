@@ -3,8 +3,11 @@ package cn.iocoder.yudao.module.bookstore.config;
 import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.infra.convert.UserId;
+import cn.iocoder.yudao.module.infra.convert.Dict;
+import cn.iocoder.yudao.module.infra.convert.User;
+import cn.iocoder.yudao.module.system.dal.dataobject.dept.DeptDO;
 import cn.iocoder.yudao.module.system.dal.dataobject.user.AdminUserDO;
+import cn.iocoder.yudao.module.system.dal.mysql.dept.DeptMapper;
 import cn.iocoder.yudao.module.system.dal.mysql.user.AdminUserMapper;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-public class UserIdConfiguration {
+public class UserInfoConvertConfiguration {
  
     /**
      * 使用个缓存
@@ -32,12 +35,16 @@ public class UserIdConfiguration {
     @Resource
     private AdminUserMapper adminUserMapper;
 
-    private static UserIdConfiguration dictUtil;
+    @Resource
+    private DeptMapper deptMapper;
+
+    private static UserInfoConvertConfiguration dictUtil;
 
     @PostConstruct
     public void init() {
         dictUtil = this;
         dictUtil.adminUserMapper = this.adminUserMapper;
+        dictUtil.deptMapper = this.deptMapper;
     }
 
 
@@ -108,9 +115,9 @@ public class UserIdConfiguration {
             return null;
         }
         for (Field field : fields) {
-            //判断每一个字典是否有Dict注解
-            if (Objects.nonNull(field.getAnnotation(UserId.class))) {
-                handleUserId(obj, field);
+            //判断每一个字典是否有User注解
+            if (Objects.nonNull(field.getAnnotation(User.class))) {
+                handleUser(obj, field);
             }
         }
         return obj;
@@ -125,20 +132,31 @@ public class UserIdConfiguration {
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
      */
-    private static void handleUserId(Object obj, Field field) throws NoSuchFieldException, IllegalAccessException {
+    private static void handleUser(Object obj, Field field) throws NoSuchFieldException, IllegalAccessException {
+        User user = field.getAnnotation(User.class);
+        String typeName = user.type();
         Field name = obj.getClass().getDeclaredField(field.getName());
         field.setAccessible(true);
         Object key = field.get(obj);
         name.setAccessible(true);
         if(!Objects.isNull(key) && StringUtils.isNotBlank(key.toString())){
-            Map<String,String> userIdMap = cache.get();
-            if(userIdMap.containsKey(key.toString())){
-                name.set(obj, userIdMap.get(key.toString()));
+            Map<String,String> userMap = cache.get();
+            String cache_key = typeName+"_"+key;
+            if(userMap.containsKey(cache_key)){
+                name.set(obj, userMap.get(cache_key));
             }else{
-                AdminUserDO adminUserDO = dictUtil.adminUserMapper.selectById(Long.parseLong(key.toString()));
-                if(!Objects.isNull(adminUserDO)){
-                    name.set(obj, adminUserDO.getNickname());
-                    cache.get().put(key.toString(),adminUserDO.getNickname());
+                if(StringUtils.equalsIgnoreCase("dept_id",typeName)){
+                    DeptDO deptDO = dictUtil.deptMapper.selectById(Long.parseLong(key.toString()));
+                    if(!Objects.isNull(deptDO)){
+                        name.set(obj, deptDO.getName());
+                        cache.get().put(cache_key,deptDO.getName());
+                    }
+                }else if(StringUtils.equalsIgnoreCase("user_id",typeName)){
+                    AdminUserDO adminUserDO = dictUtil.adminUserMapper.selectById(Long.parseLong(key.toString()));
+                    if(!Objects.isNull(adminUserDO)){
+                        name.set(obj, adminUserDO.getNickname());
+                        cache.get().put(cache_key,adminUserDO.getNickname());
+                    }
                 }
             }
         }

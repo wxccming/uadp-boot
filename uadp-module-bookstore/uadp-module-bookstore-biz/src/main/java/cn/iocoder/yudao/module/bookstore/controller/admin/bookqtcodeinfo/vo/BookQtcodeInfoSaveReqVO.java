@@ -16,9 +16,8 @@ public class BookQtcodeInfoSaveReqVO {
     @NotEmpty(message = "二维码名称不能为空")
     private String dtcodeName;
 
-    @Schema(description = "所属项目编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "12345")
-    @NotEmpty(message = "所属项目编号不能为空")
-    private String itemId;
+    @Schema(description = "所属项目编号", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Long itemId;
 
     @Schema(description = "二维码地址")
     private String dtcodeAddress;

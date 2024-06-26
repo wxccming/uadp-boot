@@ -21,9 +21,9 @@ public class BookQtcodeInfoRespVO {
     @ExcelProperty("二维码名称")
     private String dtcodeName;
 
-    @Schema(description = "所属项目编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "12345")
+    @Schema(description = "所属项目编号")
     @ExcelProperty("所属项目编号")
-    private String itemId;
+    private Long itemId;
 
     @Schema(description = "二维码地址")
     @ExcelProperty("二维码地址")
@@ -53,8 +53,8 @@ public class BookQtcodeInfoRespVO {
     @ExcelProperty("图书编号")
     private Long bookNo;
 
-    @Schema(description = "适用场景")
-    private String applicaScens;
+//    @Schema(description = "适用场景")
+//    private String applicaScens;
 
     @Schema(description = "资源信息")
     private List<SimpleBookQtcodeSourceVO> simpleBookQtcodeSourceVO;

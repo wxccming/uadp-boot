@@ -30,7 +30,7 @@ public class H5BookQtcodeSourceRespVO {
     @ExcelProperty("资源形式")
     private String sourceForm;
 
-    @Dict(dictTypeName = "applicaScens")
+    //@Dict(dictTypeName = "applicaScens")
     @Schema(description = "适用场景")
     @ExcelProperty("适用场景")
     private String applicaScens;
@@ -69,7 +69,7 @@ public class H5BookQtcodeSourceRespVO {
     private String grade;
 
     @Schema(description = "学科")
-    @Dict(dictTypeName = "subject")
+    @Dict(dictTypeName = "sudject")
     private String subject;
 
     @Schema(description = "版本")
@@ -86,6 +86,7 @@ public class H5BookQtcodeSourceRespVO {
     @Schema(description = "知识编目")
     private String sourceKnnm;
 
+    @Dict(dictTypeName = "applicaObjects")
     @Schema(description = "适用对象")
     private String applicaObjects;
 
@@ -122,12 +123,18 @@ public class H5BookQtcodeSourceRespVO {
     @Schema(description = "审核用户2")
     private String auditUser2Id;
 
-    @Dict(dictTypeName = "审核状态(0-未审核\t|1-审核不通过|\t2-审核通过)")
-    @Schema(description = "图书编号")
+    @Dict(dictTypeName = "auditStatus")
+    @Schema(description = "审核状态")
     private String auditStatus;
 
     @Dict(dictTypeName = "sourceCategory")
     @Schema(description = "资源类型(00-教案 | 01-课件 | 02-习题 | 03-素材 | 04-试卷 | 05-微课 | 06-拓展 | 07-其它")
     private String sourceCategory;
+
+    @Schema(description = "图书名称")
+    private String bookName;
+
+    @Schema(description = "章节名称")
+    private String chapterName;
 
 }

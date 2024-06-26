@@ -122,7 +122,7 @@ public class SourceInfoDO extends BaseDO {
     /**
      * 上传用户(与创建人一致)
      */
-    private String uploadUserId;
+    private Long uploadUserId;
     /**
      * 审核用户1
      */

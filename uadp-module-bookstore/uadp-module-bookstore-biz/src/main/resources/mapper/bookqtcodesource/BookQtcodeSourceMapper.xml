@@ -8,9 +8,11 @@
         代码生成器暂时只生成 Mapper XML 文件本身，更多推荐 MybatisX 快速开发插件来生成查询。
      -->
 
-    <select id="selectQtSourceList" parameterType="long"
+    <select id="selectQtSourceList"
             resultType="cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.H5BookQtcodeSourceDO" >
         SELECT
+            infra_book_info.book_name,
+            infra_book_chapter.chapter_name,
             infra_book_qtcode_source.id,
             infra_book_qtcode_source.source_name,
             infra_book_qtcode_source.source_form,
@@ -47,7 +49,32 @@
             infra_source_info.source_category
         FROM infra_book_qtcode_source
         INNER JOIN infra_source_info ON infra_book_qtcode_source.source_id = infra_source_info.id
+        INNER JOIN infra_book_info ON infra_book_qtcode_source.book_no  = infra_book_info.id
+        INNER JOIN infra_book_chapter ON infra_book_qtcode_source.chapter_id  = infra_book_chapter.id
+        INNER JOIN infra_book_qtcode_info ON infra_book_qtcode_info.id  = infra_book_qtcode_source.dtcode_id
         where infra_book_qtcode_source.deleted = 0
           and infra_book_qtcode_source.chapter_id=#{chapter_id}
+          and infra_book_qtcode_info.item_id=#{item_id}
+        <if test="applica_scens != null and applica_scens != ''">
+            and infra_book_qtcode_source.applica_scens = #{applica_scens}
+        </if>
+    </select>
+
+
+    <select id="selectListByDtcodeId"
+            resultType="cn.iocoder.yudao.module.bookstore.dal.dataobject.bookqtcodesource.BookQtcodeSourceDO" >
+        SELECT
+        infra_book_qtcode_source.id,
+        infra_book_qtcode_source.source_name,
+        infra_book_qtcode_source.source_form,
+        infra_book_qtcode_source.dtcode_id,
+        infra_book_qtcode_source.applica_scens,
+        infra_book_qtcode_source.chapter_id,
+        infra_book_qtcode_source.book_no,
+        infra_book_qtcode_source.source_id
+        FROM infra_book_qtcode_source
+        INNER JOIN infra_source_info ON infra_book_qtcode_source.source_id = infra_source_info.id
+        where infra_book_qtcode_source.deleted = 0
+        and infra_book_qtcode_source.dtcode_id=#{dtcode_id}
     </select>
 </mapper>

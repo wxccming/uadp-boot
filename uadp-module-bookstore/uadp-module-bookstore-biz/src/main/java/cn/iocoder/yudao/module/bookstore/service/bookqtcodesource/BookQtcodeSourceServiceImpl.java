@@ -87,7 +87,7 @@ public class BookQtcodeSourceServiceImpl implements BookQtcodeSourceService {
     }
 
     @Override
-    public List<H5BookQtcodeSourceDO> selectQtSourceList(Long chapter_id) {
-        return bookQtcodeSourceMapper.selectQtSourceList(chapter_id);
+    public List<H5BookQtcodeSourceDO> selectQtSourceList(Long item_id,Long chapter_id,String applica_scens) {
+        return bookQtcodeSourceMapper.selectQtSourceList(item_id,chapter_id, applica_scens);
     }
 }

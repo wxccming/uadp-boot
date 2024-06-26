@@ -95,19 +95,24 @@ public class BookQtcodeInfoController {
 
     @GetMapping("/get-bybook-qtcode")
     @Operation(summary = "根据图书编号获取二维码信息")
+    @Parameter(name = "itemId", description = "项目编号", required = true)
     @Parameter(name = "bookNo", description = "图书编号", required = true)
     //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
-    public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfoBybookNo(@RequestParam("bookNo") Long bookNo) {
-        BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfoByBookNo(bookNo);
+    public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfoBybookNo(@RequestParam("itemId") Long itemId, @RequestParam("bookNo") Long bookNo) {
+        BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfoByBookNo(bookNo,itemId);
         return success(BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class));
     }
 
     @GetMapping("/get-bychapterId-qtcode")
     @Operation(summary = "根据章节编号获取二维码信息")
+    @Parameter(name = "bookNo", description = "图书编号", required = true)
     @Parameter(name = "chapterId", description = "章节编号", required = true)
+    @Parameter(name = "itemId", description = "项目编号", required = true)
     //@PreAuthorize("@ss.hasPermission('infra:book-qtcode-info:query')")
-    public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfoByChapterId(@RequestParam("chapterId") Long chapterId) {
-        BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfoByChapterId(chapterId);
+    public CommonResult<BookQtcodeInfoRespVO> getBookQtcodeInfoByChapterId(@RequestParam("itemId") Long itemId,
+                                                                           @RequestParam("bookNo") Long bookNo,
+                                                                           @RequestParam("chapterId") Long chapterId) {
+        BookQtcodeInfoDO bookQtcodeInfo = bookQtcodeInfoService.getBookQtcodeInfoByChapterId(itemId,bookNo,chapterId);
         if(!Objects.isNull(bookQtcodeInfo)){
             List<BookQtcodeSourceDO> bookQtcodeSources = bookQtcodeInfoService.selectListByDtcodeId(bookQtcodeInfo.getId());
             BookQtcodeInfoRespVO bookQtcodeInfoRespVO = BeanUtils.toBean(bookQtcodeInfo, BookQtcodeInfoRespVO.class);

@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.bookstore.controller.admin.bookqtcodeitem.vo;
 
+import cn.iocoder.yudao.module.infra.convert.User;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -47,5 +48,10 @@ public class BookQtcodeItemRespVO {
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
     @ExcelProperty("创建时间")
     private LocalDateTime createTime;
+
+    @User
+    @Schema(description = "创建人")
+    @ExcelProperty("创建人")
+    private String creator;
 
 }

@@ -69,6 +69,6 @@ public interface BookQtcodeSourceService {
      * @param chapter_id 章节编号
      * @return 二维码资源分页
      */
-    List<H5BookQtcodeSourceDO> selectQtSourceList(Long chapter_id);
+    List<H5BookQtcodeSourceDO> selectQtSourceList(Long item_id,Long chapter_id,String applica_scens);
 
 }
