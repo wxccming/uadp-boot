@@ -30,7 +30,10 @@ public interface UserConvert {
     }
 
     default List<UserRespVO> convertList(List<AdminUserDO> list, Map<Long, DeptDO> deptMap , Map<Long, RoleDO> roleMap) {
-        return CollectionUtils.convertList(list, user -> convert(user, deptMap.get(user.getDeptId()),roleMap.get(user.getRoleId())));
+        if(roleMap!=null){
+            return CollectionUtils.convertList(list, user -> convert(user, deptMap.get(user.getDeptId()),roleMap.get(user.getRoleId())));
+        }
+        return CollectionUtils.convertList(list, user -> convert(user, deptMap.get(user.getDeptId())));
     }
 
     default UserRespVO convert(AdminUserDO user, DeptDO dept,RoleDO roleDO) {
@@ -38,8 +41,10 @@ public interface UserConvert {
         if (dept != null) {
             userVO.setDeptName(dept.getName());
         }
-        RoleRespVO roleRespVO = BeanUtils.toBean(roleDO, RoleRespVO.class);
-        userVO.setRole(roleRespVO);
+        if (roleDO != null) {
+            RoleRespVO roleRespVO = BeanUtils.toBean(roleDO, RoleRespVO.class);
+            userVO.setRole(roleRespVO);
+        }
         return userVO;
     }
 

@@ -112,10 +112,10 @@ public class UserController {
                 convertList(pageResult.getList(), AdminUserDO::getDeptId));
 
         //拼接角色
-        List<RoleDO> roleList = roleService.getRoleList(convertSet(pageResult.getList(), AdminUserDO::getRoleId));
-        Map<Long, RoleDO> roleMap = CollectionUtils.convertMap(roleList, RoleDO::getId);
+        //List<RoleDO> roleList = roleService.getRoleList(convertSet(pageResult.getList(), AdminUserDO::getRoleId));
+        //Map<Long, RoleDO> roleMap = CollectionUtils.convertMap(roleList, RoleDO::getId);
 
-        return success(new PageResult<>(UserConvert.INSTANCE.convertList(pageResult.getList(), deptMap ,roleMap),
+        return success(new PageResult<>(UserConvert.INSTANCE.convertList(pageResult.getList(), deptMap ,null),
                 pageResult.getTotal()));
     }
 
